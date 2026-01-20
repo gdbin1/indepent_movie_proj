@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.my.movietheater.movie.mapper.MovieMapper">
+	
+	<!-- USER: 현재 상영 중 영화 목록 -->
+	<select id="selectActiveMovies" resultType="MovieDto">
+		SELECT
+			movie_id,
+			movie_cd,
+			title,
+			open_date,
+			poster_url,
+			is_active
+		FROM movie
+		WHERE is_active = 1
+		ORDER BY open_date DESC
+	</select>
+
+	<!-- USER: 영화 상세 조회 -->
+	<select id="selectMovieById" resultType="MovieDto">
+		SELECT
+			movie_id,
+			source,
+			movie_cd,
+			title,
+			description,
+			runtime_min,
+			open_date,
+			poster_url,
+			price_grade,
+			is_active
+		FROM movie
+		WHERE movie_id = #{movieId}
+	</select>
+
+	<!-- ADMIN: 영화 전체 목록 -->
+	<select id="selectAllMoviesForAdmin" resultType="com.my.movietheater.movie.dto.AdminMovieDto">
+		SELECT
+			movie_id        AS movieId,
+			source          AS source,
+			movie_cd        AS movieCd,
+			title           AS title,
+			open_date       AS openDate,
+			runtime_min     AS runtimeMin,
+			poster_url      AS posterUrl,
+			price_grade     AS priceGrade,
+			is_active       AS isActive
+		FROM movie
+		ORDER BY movie_id DESC
+	</select>
+
+	<!-- ADMIN: 상영(노출) 여부 토글 -->
+	<update id="updateMovieActive">
+		UPDATE movie
+		SET is_active = #{isActive}
+		WHERE movie_id = #{movieId}
+	</update>
+
+	<!-- movieCd 존재 여부 -->
+	<select id="existsByMovieCd" resultType="int">
+		SELECT COUNT(*)
+		FROM movie
+		WHERE movie_cd = #{movieCd}
+	</select>
+
+	<!-- 신규 영화 등록 -->
+	<insert id="insertMovie">
+		INSERT INTO movie (
+			source,
+			movie_cd,
+			title,
+			description,
+			runtime_min,
+			open_date,
+			poster_url,
+			price_grade,
+			is_active
+		)
+		VALUES (
+			#{source},
+			#{movieCd},
+			#{title},
+			#{description},
+			#{runtimeMin},
+			#{openDate},
+			#{posterUrl},
+			#{priceGrade},
+			#{isActive}
+		)
+	</insert>
+
+	<!-- 기존 영화 업데이트 (제목 / 개봉일 정도만) -->
+	<update id="updateMovieByMovieCd">
+		UPDATE movie
+		SET
+			title = #{title},
+			open_date = #{openDate},
+			updated_at = NOW()
+		WHERE movie_cd = #{movieCd}
+	</update>
+
+</mapper>

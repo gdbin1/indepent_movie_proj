@@ -30,36 +30,6 @@ body {
   padding: 0 24px;
 }
 
-/* ===== Header ===== */
-.header {
-  background: #f6f6f4;
-  border-bottom: 1px solid var(--border);
-}
-.header-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 64px;
-}
-.logo {
-  font-weight: 700;
-  font-size: 18px;
-}
-.nav a {
-  margin-left: 20px;
-  text-decoration: none;
-  color: #555;
-  font-size: 18px;
-}
-.nav a:hover {
-  color: #000;
-}
-.header-auth {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
 /* ===== Buttons ===== */
 .btn-primary {
   background: var(--primary);
@@ -390,17 +360,7 @@ body {
   flex-wrap: wrap;
 }
 
-/* ===== Footer ===== */
-.footer {
-  border-top: 1px solid var(--border);
-  padding: 24px 0;
-}
-.footer-inner {
-  display: flex;
-  justify-content: space-between;
-  font-size: 13px;
-  color: #777;
-}
+
 
 /* ===== Responsive ===== */
 @media (max-width: 1000px) {

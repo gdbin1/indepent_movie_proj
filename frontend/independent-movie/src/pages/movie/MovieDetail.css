@@ -1,0 +1,225 @@
+.movie-detail {
+  padding: 60px 0;
+}
+
+.movie-detail-inner {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 48px;
+}
+
+/* ===== Poster ===== */
+.movie-poster-area img {
+  width: 100%;
+  border-radius: 14px;
+  object-fit: cover;
+}
+
+.movie-poster-placeholder {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  background: linear-gradient(135deg, #e5e5e5, #f2f2f2);
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  font-weight: 600;
+  text-align: center;
+}
+
+.movie-poster-placeholder p {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* ===== Info ===== */
+.movie-info-area {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.movie-grade {
+  width: fit-content;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.movie-grade.premium {
+  background: #111;
+  color: #fff;
+}
+
+.movie-grade.basic {
+  background: #f1f1f1;
+  color: #333;
+}
+
+.movie-title {
+  font-size: 30px;
+  font-weight: 800;
+}
+
+.movie-meta {
+  display: flex;
+  gap: 20px;
+  font-size: 14px;
+  color: #666;
+}
+
+/* ===== Info Cards ===== */
+.movie-info-cards {
+  display: flex;
+  gap: 14px;
+}
+
+.info-card {
+  background: #f7f7f7;
+  padding: 16px;
+  border-radius: 12px;
+  min-width: 120px;
+}
+
+.info-card label {
+  font-size: 12px;
+  color: #888;
+}
+
+.info-card strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 16px;
+}
+
+/* ===== Description ===== */
+.movie-description h3 {
+  margin-bottom: 8px;
+}
+
+.movie-description p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #333;
+}
+
+.empty-desc {
+  color: #999;
+  font-style: italic;
+}
+
+/* ===== Premium Notice ===== */
+.premium-notice {
+  background: #fafafa;
+  padding: 18px 20px;
+  border-radius: 12px;
+  line-height: 1.6;
+}
+
+.premium-notice h4 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+/* ===== Actions ===== */
+.movie-actions {
+  margin-top: 28px;
+  display: flex;
+  gap: 12px;
+}
+
+.btn-primary {
+  background: #5c6ac4;
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: not-allowed;
+}
+
+.btn-outline {
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 12px 20px;
+  border-radius: 8px;
+}
+
+.btn-text {
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+}
+
+/* ===== States ===== */
+.movie-detail-loading,
+.movie-detail-error {
+  padding: 100px 0;
+  text-align: center;
+  font-size: 16px;
+  color: #777;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .movie-detail-inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== Back Button ===== */
+.btn-back {
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  color: #444;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-back:hover {
+  background: #eee;
+  border-color: #ccc;
+}
+
+/* ===== Top Back Navigation ===== */
+/* ===== Top Navigation (Movie List Back) ===== */
+.movie-detail-top-nav {
+  max-width: 1100px;
+  margin: 0 auto 24px;
+  padding: 0 4px;
+}
+
+.btn-top-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  background: #f4f5f7;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-top-nav .icon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.btn-top-nav:hover {
+  background: #eceef2;
+  border-color: #ccc;
+}

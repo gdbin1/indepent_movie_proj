@@ -1,0 +1,84 @@
+/* ================= User Layout ================= */
+.user-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-layout-main {
+  flex: 1;
+}
+
+/* ================= Header ================= */
+/* ================= Header ================= */
+.user-header {
+  background: #f6f6f4;                 /* ✅ 기존 Header 색 */
+  border-bottom: 1px solid var(--border);
+}
+
+.user-header-inner {
+  height: 64px;                        /* ✅ 기존과 동일 */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo */
+.user-logo {
+  font-weight: 700;
+  font-size: 18px;                     /* ✅ 기존과 동일 */
+}
+
+/* Nav */
+.user-nav {
+  display: flex;
+}
+
+.user-nav span {
+  margin-left: 20px;                   /* ✅ 기존 nav a 느낌 */
+  font-size: 18px;                     /* ✅ 기존 크기 */
+  color: #555;
+  cursor: pointer;
+}
+
+.user-nav span:hover {
+  color: #000;
+}
+
+/* Auth */
+.user-auth {
+  display: flex;
+  align-items: center;
+  gap: 8px;                            /* ✅ 기존 header-auth */
+}
+
+.user-auth .btn-text {
+  background: none;
+  border: none;
+  font-size: 18px;               
+  color: #555;
+  cursor: pointer;
+}
+
+
+/* ================= Footer ================= */
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 24px 0;
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #777;
+}
+
+/* ================= Responsive ================= */
+@media (max-width: 768px) {
+  .footer-inner {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+}
