@@ -1,0 +1,413 @@
+/* ===== Reset ===== */
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: "Noto Sans KR", system-ui, sans-serif;
+  color: #2a2a2a;
+  background: #f6f6f4; /* 순백 제거 → 편안한 웜 그레이 */
+}
+
+/* ===== Variables ===== */
+:root {
+  --primary: #5c6ac4;        /* 인디고 → 부드럽게 */
+  --primary-soft: #eef0fb;
+  --surface: #ffffff;
+  --surface-soft: #f1f1ee;
+  --border: #e4e4e2;
+  --text-main: #2a2a2a;
+  --text-sub: #6f6f6f;
+}
+
+/* ===== Layout ===== */
+.page {
+  min-height: 100vh;
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ===== Header ===== */
+.header {
+  background: #f6f6f4;
+  border-bottom: 1px solid var(--border);
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+.logo {
+  font-weight: 700;
+  font-size: 18px;
+}
+.nav a {
+  margin-left: 20px;
+  text-decoration: none;
+  color: #555;
+  font-size: 18px;
+}
+.nav a:hover {
+  color: #000;
+}
+.header-auth {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ===== Buttons ===== */
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.btn-primary:hover {
+  opacity: 0.9;
+}
+.btn-primary.small {
+  padding: 8px 14px;
+  font-size: 13px;
+}
+
+.btn-outline {
+  background: var(--surface);
+  border: 1px solid #ccc;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.btn-outline.small {
+  padding: 8px 14px;
+  font-size: 13px;
+}
+
+.btn-text {
+  background: none;
+  border: none;
+  color: #555;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+/* ===== Hero ===== */
+.hero {
+  padding: 30px 0;
+}
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 40px;
+  align-items: center;
+}
+.hero-badge {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 6px 12px;
+  background: var(--primary-soft);
+  color: var(--primary);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+.hero-text h1 {
+  font-size: 40px;
+  line-height: 1.2;
+  margin: 0 0 16px;
+}
+.hero-text strong {
+  color: var(--primary);
+}
+.hero-text p {
+  color: var(--text-sub);
+  line-height: 1.6;
+}
+.hero-actions {
+  margin-top: 24px;
+}
+
+/* ===== Hero Image ===== */
+.hero-image .image-placeholder {
+  width: 100%;
+  height: 320px;
+  background: #e9e9e6;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9a9a98;
+  font-size: 14px;
+}
+
+/* ===== Section Common ===== */
+.section {
+  padding: 30px 0;
+}
+.section.gray {
+  background: var(--surface-soft);
+}
+.section-title {
+  font-size: 32px;
+  margin: 20px 0;
+}
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 10px;
+}
+.section-sub {
+  font-size: 13px;
+  color: #777;
+}
+.section-link {
+  font-size: 13px;
+  color: var(--primary);
+  text-decoration: none;
+}
+.section-link:hover {
+  text-decoration: underline;
+}
+
+/* ===== Box Office ===== */
+.boxoffice {
+  background: #f3f4fa;
+}
+.boxoffice-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+}
+.boxoffice-card {
+  display: flex;
+  gap: 14px;
+  padding: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.boxoffice-poster {
+  width: 90px;
+  height: 130px;
+  background: #dcdcdc;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+.boxoffice-info h3 {
+  font-size: 15px;
+  margin: 6px 0;
+}
+.boxoffice-info p {
+  font-size: 13px;
+  color: #777;
+}
+
+/* ===== Movies ===== */
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 24px;
+}
+.movie-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.movie-poster {
+  height: 250px;
+  background: #d8d8d8;
+}
+.movie-info {
+  padding: 14px;
+}
+.movie-info h3 {
+  font-size: 16px;
+  margin: 8px 0;
+}
+.movie-info p {
+  font-size: 13px;
+  color: #777;
+}
+.movie-badge {
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+.movie-badge.premium {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* ===== Rooms ===== */
+.room-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+}
+.room-card {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 28px;
+  border: 1px solid var(--border);
+}
+.room-card h3 {
+  margin-bottom: 8px;
+}
+
+/* ===== Guide / FAQ / Notice ===== */
+.help-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.9fr 0.9fr;
+  gap: 24px;
+}
+.help-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px;
+}
+.help-card__top {
+  margin-bottom: 14px;
+}
+.help-pill {
+  display: inline-block;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-weight: 600;
+}
+.help-title {
+  font-size: 18px;
+  margin: 10px 0 8px;
+}
+.help-desc {
+  font-size: 14px;
+  color: var(--text-sub);
+  line-height: 1.6;
+}
+.help-desc b {
+  color: var(--text-main);
+}
+
+/* steps */
+.steps {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 14px;
+  display: grid;
+  gap: 10px;
+}
+.step {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  background: #fafafa;
+  border: 1px solid var(--border);
+}
+.step-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  font-weight: 700;
+  font-size: 13px;
+}
+.step-title {
+  font-size: 14px;
+  font-weight: 700;
+}
+.step-sub {
+  font-size: 12.5px;
+  color: #777;
+}
+
+/* FAQ */
+.faq-mini {
+  display: grid;
+  gap: 10px;
+  margin: 14px 0;
+}
+.faq-item {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+.faq-item summary {
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+.faq-item p {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #666;
+}
+
+/* Notice */
+.notice-mini {
+  list-style: none;
+  padding: 0;
+  margin: 14px 0;
+  display: grid;
+  gap: 10px;
+}
+.notice-row {
+  display: flex;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.notice-date {
+  font-size: 12px;
+  color: #777;
+  min-width: 44px;
+}
+.notice-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* actions */
+.help-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* ===== Footer ===== */
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 24px 0;
+}
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #777;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1000px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+  }
+  .help-grid {
+    grid-template-columns: 1fr;
+  }
+}

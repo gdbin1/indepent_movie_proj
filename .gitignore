@@ -1,0 +1,26 @@
+.env
+
+# ===== Backend =====
+.gradle/
+build/
+bin/
+
+# ===== Frontend =====
+node_modules/
+dist/
+build/
+
+# ===== IDE =====
+.metadata/
+.settings/
+.project
+.classpath
+.idea/
+*.iml
+
+# ===== OS =====
+.DS_Store
+Thumbs.db
+
+# ===== Env (전역) =====
+.env
