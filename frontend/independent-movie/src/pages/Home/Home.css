@@ -505,3 +505,13 @@ body {
     grid-template-columns: 1fr;
   }
 }
+/* BASIC 영화 뱃지 */
+.uH .movie-badge.basic {
+  background: #374151;      /* 진한 차콜 그레이 */
+  color: #ffffff;
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}

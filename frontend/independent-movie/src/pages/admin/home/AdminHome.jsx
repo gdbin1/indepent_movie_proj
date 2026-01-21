@@ -161,13 +161,27 @@ export default function AdminHome() {
 
         <div className="adH-form-row">
           <label className="adH-label">개봉일 *</label>
-          <input
-            type="date"
-            className="adH-input"
-            value={openDate}
-            onChange={(e) => setOpenDate(e.target.value)}
-          />
+
+          <div className="adH-date-wrap">
+            {/* 수기 입력 */}
+            <input
+              type="text"
+              className="adH-input"
+              placeholder="YYYY-MM-DD (예: 2018-02-28)"
+              value={openDate}
+              onChange={(e) => setOpenDate(e.target.value)}
+            />
+
+            {/* 날짜 선택 */}
+            <input
+              type="date"
+              className="adH-input adH-date-picker"
+              value={openDate}
+              onChange={(e) => setOpenDate(e.target.value)}
+            />
+          </div>
         </div>
+
 
         <div className="adH-form-row">
           <label className="adH-label">포스터 URL</label>

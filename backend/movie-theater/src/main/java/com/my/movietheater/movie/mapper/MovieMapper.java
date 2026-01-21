@@ -31,16 +31,24 @@ public interface MovieMapper {
     );
 
     /**
-     * USER - 현재 상영 중 영화 목록 조회 (PREMIUM)
+     * ✅ ADMIN - 영화 삭제 (BASIC만 가능, PREMIUM은 Service에서 차단)
+     */
+    int deleteMovie(@Param("movieId") Long movieId);
+
+    /**
+     * USER - 현재 상영 중 영화 목록 조회
      */
     List<MovieDto> selectActiveMovies();
+
+    /**
+     * USER - 현재 상영 중 영화 목록 조회 (등급별)
+     */
+    List<MovieDto> selectActiveMoviesByGrade(
+            @Param("priceGrade") String priceGrade
+    );
 
     /**
      * USER - 영화 상세 조회
      */
     MovieDto selectMovieById(Long movieId);
-    
-    List<MovieDto> selectActiveMoviesByGrade(
-            @Param("priceGrade") String priceGrade
-    );
 }

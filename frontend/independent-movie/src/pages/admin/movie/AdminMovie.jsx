@@ -26,6 +26,7 @@ export default function AdminMovie() {
     fetchMovies();
   }, []);
 
+  /** 상영(노출) 토글 */
   const toggleActive = async (movieId, currentIsActive) => {
     const next = currentIsActive === 1 ? false : true;
     try {
@@ -46,6 +47,28 @@ export default function AdminMovie() {
     }
   };
 
+  /** ✅ BASIC 영화 삭제 */
+  const deleteMovie = async (movieId) => {
+    const ok = window.confirm("정말로 이 영화를 삭제하시겠습니까?");
+    if (!ok) return;
+
+    try {
+      const res = await fetch(`/api/admin/movie/${movieId}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(text || "삭제 실패");
+      }
+
+      setMovies((prev) => prev.filter((m) => m.movieId !== movieId));
+    } catch (e) {
+      console.error(e);
+      setMsg(e.message || "영화 삭제 중 오류가 발생했습니다.");
+    }
+  };
+
   const premiumMovies = useMemo(
     () => movies.filter((m) => m.priceGrade === "PREMIUM"),
     [movies]
@@ -56,7 +79,7 @@ export default function AdminMovie() {
     [movies]
   );
 
-  const renderSection = (title, list) => (
+  const renderSection = (title, list, isBasicSection = false) => (
     <section className="adM-section">
       <h2 className="adM-section-title">{title}</h2>
 
@@ -76,9 +99,8 @@ export default function AdminMovie() {
                 <h3 className="adM-title">{m.title}</h3>
 
                 <span
-                  className={`adM-badge ${
-                    m.isActive === 1 ? "on" : "off"
-                  }`}
+                  className={`adM-badge ${m.isActive === 1 ? "on" : "off"
+                    }`}
                 >
                   {m.isActive === 1 ? "상영중" : "미상영"}
                 </span>
@@ -89,12 +111,24 @@ export default function AdminMovie() {
                 <span>{m.runtimeMin ? `${m.runtimeMin}분` : "-"}</span>
               </div>
 
-              <button
-                className={`adM-btn ${m.isActive === 1 ? "danger" : ""}`}
-                onClick={() => toggleActive(m.movieId, m.isActive)}
-              >
-                {m.isActive === 1 ? "상영 종료" : "상영 시작"}
-              </button>
+              <div className="adM-actions">
+                <button
+                  className={`adM-btn ${m.isActive === 1 ? "danger" : ""}`}
+                  onClick={() => toggleActive(m.movieId, m.isActive)}
+                >
+                  {m.isActive === 1 ? "상영 종료" : "상영 시작"}
+                </button>
+
+                {/* ✅ BASIC 영화만 삭제 버튼 노출 */}
+                {isBasicSection && (
+                  <button
+                    className="adM-btn danger-outline"
+                    onClick={() => deleteMovie(m.movieId)}
+                  >
+                    삭제
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         ))}
@@ -117,11 +151,11 @@ export default function AdminMovie() {
 
       {msg && <div className="adM-msg">{msg}</div>}
 
-      {renderSection("PREMIUM 영화 (박스오피스)", premiumMovies)}
+      {renderSection("PREMIUM 영화 (박스오피스)", premiumMovies, false)}
 
       <div className="adM-divider" />
 
-      {renderSection("BASIC 영화 (수동 등록)", basicMovies)}
+      {renderSection("BASIC 영화 (수동 등록)", basicMovies, true)}
     </div>
   );
 }

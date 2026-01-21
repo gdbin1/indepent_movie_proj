@@ -22,17 +22,20 @@ export default function Home() {
 
   /* ================= MOVIE FETCH ================= */
   useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        const res = await api.get("/movie/active");
-        setPremiumMovies(res.data || []);
-        setMovies(res.data || []);
-      } catch (e) {
-        console.error("영화 목록 조회 실패", e);
-      }
-    };
-    fetchMovies();
-  }, []);
+  const fetchMovies = async () => {
+    try {
+      const premiumRes = await api.get("/movie/active/premium");
+      const basicRes = await api.get("/movie/active/basic");
+
+      setPremiumMovies(premiumRes.data || []);
+      setMovies(basicRes.data || []);
+    } catch (e) {
+      console.error("영화 목록 조회 실패", e);
+    }
+  };
+  fetchMovies();
+}, []);
+
 
   /* ================= 6개 제한 ================= */
   const basePremium = premiumMovies.slice(0, LIMIT_COUNT);
@@ -213,7 +216,7 @@ export default function Home() {
                       )}
                     </div>
                     <div className="movie-info">
-                      <span className="movie-badge premium">PREMIUM</span>
+                      <span className="movie-badge basic">BASIC</span>
                       <h3>{movie.title}</h3>
                       <p>러닝타임 {movie.runtimeMin || "-"}분</p>
                     </div>

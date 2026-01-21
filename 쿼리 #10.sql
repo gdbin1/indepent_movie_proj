@@ -119,3 +119,8 @@ INSERT INTO users (
   
   'ADMIN'
 );
+
+SELECT * FROM movie;
+
+DELETE FROM movie 
+WHERE price_grade = 'BASIC';

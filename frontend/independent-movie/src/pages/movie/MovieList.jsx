@@ -16,11 +16,13 @@ export default function MovieList() {
 
   const fetchMovies = async () => {
     try {
-      const premiumRes = await api.get("/movie/active");
+      // ✅ PREMIUM (박스오피스)
+      const premiumRes = await api.get("/movie/active/premium");
       setPremiumMovies(premiumRes.data || []);
 
-      const movieRes = await api.get("/movie/active");
-      setMovies(movieRes.data || []);
+      // ✅ BASIC (현재 상영 중)
+      const basicRes = await api.get("/movie/active/basic");
+      setMovies(basicRes.data || []);
     } catch (e) {
       console.error("영화 목록 조회 실패", e);
     } finally {
@@ -79,7 +81,7 @@ export default function MovieList() {
           )}
         </section>
 
-        {/* ================= 현재 상영 중 영화 ================= */}
+        {/* ================= 현재 상영 중 영화 (BASIC) ================= */}
         <section className="uML-section">
           <h2 className="uML-section-title">현재 상영 중인 영화</h2>
 
@@ -97,15 +99,7 @@ export default function MovieList() {
                 </div>
 
                 <div className="uML-movie-info">
-                  <span
-                    className={`uML-badge ${
-                      movie.priceGrade === "PREMIUM"
-                        ? "premium"
-                        : "basic"
-                    }`}
-                  >
-                    {movie.priceGrade}
-                  </span>
+                  <span className="uML-badge basic">BASIC</span>
                   <h3>{movie.title}</h3>
                   <p>러닝타임 {movie.runtimeMin || "-"}분</p>
                 </div>

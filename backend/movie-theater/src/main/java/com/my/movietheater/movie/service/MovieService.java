@@ -29,7 +29,7 @@ public class MovieService {
     }
 
     /**
-     * ✅ USER - 현재 상영 중 영화 (등급별)
+     * USER - 현재 상영 중 영화 (등급별)
      * is_active = 1
      * price_grade = BASIC / PREMIUM
      */
@@ -114,5 +114,26 @@ public class MovieService {
     public void updateMovieActive(Long movieId, boolean isActive) {
         int activeValue = isActive ? 1 : 0;
         movieMapper.updateMovieActive(movieId, activeValue);
+    }
+
+    /**
+     * ✅ ADMIN - 영화 삭제
+     * - BASIC : 삭제 가능
+     * - PREMIUM : 삭제 불가 (박스오피스 데이터 보호)
+     */
+    @Transactional
+    public void deleteMovie(Long movieId) {
+
+        MovieDto movie = movieMapper.selectMovieById(movieId);
+
+        if (movie == null) {
+            throw new IllegalArgumentException("존재하지 않는 영화입니다.");
+        }
+
+        if ("PREMIUM".equals(movie.getPriceGrade())) {
+            throw new IllegalStateException("PREMIUM 영화는 삭제할 수 없습니다.");
+        }
+
+        movieMapper.deleteMovie(movieId);
     }
 }
