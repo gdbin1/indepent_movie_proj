@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "./AdminMovie.css";
 
 export default function AdminMovie() {
@@ -12,7 +12,6 @@ export default function AdminMovie() {
     try {
       const res = await fetch("/api/admin/movie");
       if (!res.ok) throw new Error("목록 조회 실패");
-
       const data = await res.json();
       setMovies(Array.isArray(data) ? data : []);
     } catch (e) {
@@ -29,7 +28,6 @@ export default function AdminMovie() {
 
   const toggleActive = async (movieId, currentIsActive) => {
     const next = currentIsActive === 1 ? false : true;
-
     try {
       const res = await fetch(
         `/api/admin/movie/${movieId}/active?isActive=${next}`,
@@ -37,10 +35,6 @@ export default function AdminMovie() {
       );
       if (!res.ok) throw new Error("토글 실패");
 
-      const text = await res.text();
-      setMsg(text || "변경 완료");
-
-      // UI 즉시 반영
       setMovies((prev) =>
         prev.map((m) =>
           m.movieId === movieId ? { ...m, isActive: next ? 1 : 0 } : m
@@ -52,63 +46,82 @@ export default function AdminMovie() {
     }
   };
 
-  return (
-    <div className="admin-page">
-      <div className="admin-head">
-        <h1 className="admin-title">상영 영화 관리</h1>
-        <button className="admin-btn-outline" onClick={fetchMovies} disabled={loading}>
-          {loading ? "불러오는 중..." : "새로고침"}
-        </button>
-      </div>
+  const premiumMovies = useMemo(
+    () => movies.filter((m) => m.priceGrade === "PREMIUM"),
+    [movies]
+  );
 
-      <p className="admin-desc">
-        movie 테이블에 저장된 영화 목록입니다. <br />
-        <strong>is_active = 1</strong> 인 영화만 USER 화면에 노출(=상영)됩니다.
-      </p>
+  const basicMovies = useMemo(
+    () => movies.filter((m) => m.priceGrade === "BASIC"),
+    [movies]
+  );
 
-      {msg && <div className="admin-msg">{msg}</div>}
+  const renderSection = (title, list) => (
+    <section className="adM-section">
+      <h2 className="adM-section-title">{title}</h2>
 
-      <div className="admin-grid">
-        {movies.map((m) => (
-          <div key={m.movieId} className="admin-card">
-            <div className="poster">
+      <div className="adM-grid">
+        {list.map((m) => (
+          <div key={m.movieId} className="adM-card">
+            <div className="adM-poster">
               {m.posterUrl ? (
                 <img src={m.posterUrl} alt={m.title} />
               ) : (
-                <div className="poster-empty">NO POSTER</div>
+                <div className="adM-poster-empty">NO POSTER</div>
               )}
             </div>
 
-            <div className="info">
-              <div className="row-top">
-                <h3 className="title">{m.title}</h3>
-                <span className={m.isActive === 1 ? "badge on" : "badge off"}>
+            <div className="adM-info">
+              <div className="adM-row-top">
+                <h3 className="adM-title">{m.title}</h3>
+
+                <span
+                  className={`adM-badge ${
+                    m.isActive === 1 ? "on" : "off"
+                  }`}
+                >
                   {m.isActive === 1 ? "상영중" : "미상영"}
                 </span>
               </div>
 
-              <div className="meta">
-                <span>source: {m.source || "-"}</span>
-                <span>open: {m.openDate || "-"}</span>
-                <span>runtime: {m.runtimeMin ? `${m.runtimeMin}분` : "-"}</span>
+              <div className="adM-meta">
+                <span>{m.openDate || "-"}</span>
+                <span>{m.runtimeMin ? `${m.runtimeMin}분` : "-"}</span>
               </div>
 
-              <div className="actions">
-                <button
-                  className={m.isActive === 1 ? "admin-btn danger" : "admin-btn"}
-                  onClick={() => toggleActive(m.movieId, m.isActive)}
-                >
-                  {m.isActive === 1 ? "상영 종료(OFF)" : "상영 시작(ON)"}
-                </button>
-              </div>
+              <button
+                className={`adM-btn ${m.isActive === 1 ? "danger" : ""}`}
+                onClick={() => toggleActive(m.movieId, m.isActive)}
+              >
+                {m.isActive === 1 ? "상영 종료" : "상영 시작"}
+              </button>
             </div>
           </div>
         ))}
 
-        {!loading && movies.length === 0 && (
-          <div className="empty">영화 데이터가 없습니다. 박스오피스 저장부터 진행해 주세요.</div>
+        {!loading && list.length === 0 && (
+          <div className="adM-empty">해당 영화가 없습니다.</div>
         )}
       </div>
+    </section>
+  );
+
+  return (
+    <div className="adM-page">
+      <div className="adM-head">
+        <h1 className="adM-title-page">상영 영화 관리</h1>
+        <button className="adM-btn-outline" onClick={fetchMovies}>
+          새로고침
+        </button>
+      </div>
+
+      {msg && <div className="adM-msg">{msg}</div>}
+
+      {renderSection("PREMIUM 영화 (박스오피스)", premiumMovies)}
+
+      <div className="adM-divider" />
+
+      {renderSection("BASIC 영화 (수동 등록)", basicMovies)}
     </div>
   );
 }

@@ -39,4 +39,8 @@ public interface MovieMapper {
      * USER - 영화 상세 조회
      */
     MovieDto selectMovieById(Long movieId);
+    
+    List<MovieDto> selectActiveMoviesByGrade(
+            @Param("priceGrade") String priceGrade
+    );
 }

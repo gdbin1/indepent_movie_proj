@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.my.movietheater.kobis.dto.WeeklyBoxOfficeDto;
 import com.my.movietheater.kobis.service.KobisService;
+import com.my.movietheater.movie.dto.AdminMovieCreateRequest;
 import com.my.movietheater.movie.dto.AdminMovieDto;
 import com.my.movietheater.movie.service.MovieService;
 
@@ -16,20 +17,34 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AdminMovieController {
 
-	private final KobisService kobisService;
-	private final MovieService movieService;
+    private final KobisService kobisService;
+    private final MovieService movieService;
 
-	@PostMapping("/boxoffice")
-	public String saveBoxOfficeToMovieTable(@RequestParam("targetDt") String targetDt) {
+    /**
+     * KOBIS 박스오피스 영화 저장 (PREMIUM)
+     * POST /api/admin/movie/boxoffice
+     */
+    @PostMapping("/boxoffice")
+    public String saveBoxOfficeToMovieTable(@RequestParam("targetDt") String targetDt) {
 
-		List<WeeklyBoxOfficeDto> boxOfficeList = kobisService.getWeeklyBoxOfficeList(targetDt);
+        List<WeeklyBoxOfficeDto> boxOfficeList = kobisService.getWeeklyBoxOfficeList(targetDt);
 
-		movieService.saveMoviesFromBoxOffice(boxOfficeList);
+        movieService.saveMoviesFromBoxOffice(boxOfficeList);
 
-		return "KOBIS 박스오피스 → movie 테이블 저장 완료";
-	}
-	
-	/**
+        return "KOBIS 박스오피스 → movie 테이블 저장 완료";
+    }
+
+    /**
+     * ADMIN 수동 영화 등록 (BASIC)
+     * POST /api/admin/movie
+     */
+    @PostMapping
+    public String createMovie(@RequestBody AdminMovieCreateRequest request) {
+        movieService.createBasicMovie(request);
+        return "ADMIN 영화(BASIC) 등록 완료";
+    }
+
+    /**
      * movie 전체 목록 조회 (ADMIN)
      * GET /api/admin/movie
      */

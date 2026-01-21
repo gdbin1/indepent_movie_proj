@@ -18,6 +18,23 @@
 		WHERE is_active = 1
 		ORDER BY open_date DESC
 	</select>
+	
+	<!-- USER: 현재 상영 중 영화 목록 (등급별) -->
+	<select id="selectActiveMoviesByGrade" resultType="MovieDto">
+    SELECT
+        movie_id,
+        movie_cd,
+        title,
+        open_date,
+        poster_url,
+        price_grade,
+        is_active
+    FROM movie
+    WHERE is_active = 1
+      AND price_grade = #{priceGrade}
+    ORDER BY open_date DESC
+	</select>
+
 
 	<!-- USER: 영화 상세 조회 -->
 	<select id="selectMovieById" resultType="MovieDto">

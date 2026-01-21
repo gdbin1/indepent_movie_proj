@@ -12,12 +12,14 @@
 /* ================= Header ================= */
 /* ================= Header ================= */
 .user-header {
-  background: #f6f6f4;                 /* ✅ 기존 Header 색 */
+  background: #f6f6f4;
+  /* ✅ 기존 Header 색 */
   border-bottom: 1px solid var(--border);
 }
 
 .user-header-inner {
-  height: 64px;                        /* ✅ 기존과 동일 */
+  height: 64px;
+  /* ✅ 기존과 동일 */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -26,36 +28,49 @@
 /* Logo */
 .user-logo {
   font-weight: 700;
-  font-size: 18px;                     /* ✅ 기존과 동일 */
+  font-size: 18px;
+  /* ✅ 기존과 동일 */
 }
 
 /* Nav */
 .user-nav {
   display: flex;
+  font-size: 18px;
 }
 
-.user-nav span {
-  margin-left: 20px;                   /* ✅ 기존 nav a 느낌 */
-  font-size: 18px;                     /* ✅ 기존 크기 */
+.user-nav .user-nav-link {
+  margin-left: 20px;
+  /* ✅ 기존 span과 동일 */
+  font-size: 18px;
+  /* ✅ 기존 크기 */
   color: #555;
   cursor: pointer;
+
+  text-decoration: none;
+  /* ⭐ a 태그 기본 제거 */
+  font: inherit;
+  /* ⭐ 폰트 유지 */
+
 }
 
-.user-nav span:hover {
+.user-nav .user-nav-link:hover {
   color: #000;
 }
+
+
 
 /* Auth */
 .user-auth {
   display: flex;
   align-items: center;
-  gap: 8px;                            /* ✅ 기존 header-auth */
+  gap: 8px;
+  /* ✅ 기존 header-auth */
 }
 
 .user-auth .btn-text {
   background: none;
   border: none;
-  font-size: 18px;               
+  font-size: 18px;
   color: #555;
   cursor: pointer;
 }
@@ -81,4 +96,11 @@
     gap: 8px;
     text-align: center;
   }
+}
+
+.user-logo-link {
+  text-decoration: none;
+  /* 밑줄 제거 */
+  color: inherit;
+  /* 기존 글자색 유지 */
 }

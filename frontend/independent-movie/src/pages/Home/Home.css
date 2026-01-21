@@ -2,16 +2,17 @@
 * {
   box-sizing: border-box;
 }
+
 body {
   margin: 0;
   font-family: "Noto Sans KR", system-ui, sans-serif;
   color: #2a2a2a;
-  background: #f6f6f4; /* 순백 제거 → 편안한 웜 그레이 */
+  background: #f6f6f4;
 }
 
 /* ===== Variables ===== */
 :root {
-  --primary: #5c6ac4;        /* 인디고 → 부드럽게 */
+  --primary: #5c6ac4;
   --primary-soft: #eef0fb;
   --surface: #ffffff;
   --surface-soft: #f1f1ee;
@@ -20,17 +21,18 @@ body {
   --text-sub: #6f6f6f;
 }
 
-/* ===== Layout ===== */
+/* ===== Layout (GLOBAL) ===== */
 .page {
   min-height: 100vh;
 }
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
 }
 
-/* ===== Buttons ===== */
+/* ===== Buttons (GLOBAL) ===== */
 .btn-primary {
   background: var(--primary);
   color: #fff;
@@ -39,12 +41,9 @@ body {
   border-radius: 8px;
   cursor: pointer;
 }
+
 .btn-primary:hover {
   opacity: 0.9;
-}
-.btn-primary.small {
-  padding: 8px 14px;
-  font-size: 13px;
 }
 
 .btn-outline {
@@ -53,10 +52,6 @@ body {
   padding: 12px 20px;
   border-radius: 8px;
   cursor: pointer;
-}
-.btn-outline.small {
-  padding: 8px 14px;
-  font-size: 13px;
 }
 
 .btn-text {
@@ -67,17 +62,23 @@ body {
   font-size: 18px;
 }
 
+/* =========================================================
+   ===================== HOME SCOPE ========================
+   ========================================================= */
+
 /* ===== Hero ===== */
-.hero {
+.uH .hero {
   padding: 30px 0;
 }
-.hero-inner {
+
+.uH .hero-inner {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
   gap: 40px;
   align-items: center;
 }
-.hero-badge {
+
+.uH .hero-badge {
   display: inline-block;
   margin-bottom: 12px;
   padding: 6px 12px;
@@ -85,26 +86,27 @@ body {
   color: var(--primary);
   border-radius: 20px;
   font-size: 12px;
-  font-weight: 500;
 }
-.hero-text h1 {
+
+.uH .hero-text h1 {
   font-size: 40px;
   line-height: 1.2;
-  margin: 0 0 16px;
 }
-.hero-text strong {
+
+.uH .hero-text strong {
   color: var(--primary);
 }
-.hero-text p {
+
+.uH .hero-text p {
   color: var(--text-sub);
-  line-height: 1.6;
 }
-.hero-actions {
+
+.uH .hero-actions {
   margin-top: 24px;
 }
 
 /* ===== Hero Image ===== */
-.hero-image .image-placeholder {
+.uH .hero-image .image-placeholder {
   width: 100%;
   height: 320px;
   background: #e9e9e6;
@@ -112,142 +114,266 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #9a9a98;
-  font-size: 14px;
 }
 
-/* ===== Section Common ===== */
-.section {
+/* ===== Section ===== */
+.uH .section {
   padding: 30px 0;
 }
-.section.gray {
+
+.uH .section.gray {
   background: var(--surface-soft);
 }
-.section-title {
+
+.uH .section-title {
   font-size: 32px;
   margin: 20px 0;
 }
-.section-head {
+
+.uH .section-head {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  margin-bottom: 10px;
 }
-.section-sub {
+
+.uH .section-sub {
   font-size: 13px;
   color: #777;
 }
-.section-link {
+
+.uH .section-more {
   font-size: 13px;
   color: var(--primary);
   text-decoration: none;
 }
-.section-link:hover {
-  text-decoration: underline;
-}
 
 /* ===== Box Office ===== */
-.boxoffice {
+.uH .boxoffice {
   background: #f3f4fa;
 }
-.boxoffice-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 24px;
-}
-.boxoffice-card {
+
+.uH .boxoffice-card {
   display: flex;
-  gap: 14px;
-  padding: 14px;
+  gap: 16px;
+  padding: 18px;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 14px;
 }
-.boxoffice-poster {
-  width: 90px;
-  height: 130px;
+
+.uH .boxoffice-poster {
+  width: 120px;
+  height: 170px;
   background: #dcdcdc;
-  border-radius: 8px;
   flex-shrink: 0;
+  border-radius: 8px;
+  overflow: hidden;
 }
-.boxoffice-info h3 {
-  font-size: 15px;
-  margin: 6px 0;
+
+.uH .boxoffice-info h3 {
+  font-size: 16px;
 }
-.boxoffice-info p {
+
+.uH .boxoffice-info p {
   font-size: 13px;
   color: #777;
 }
 
-/* ===== Movies ===== */
-.movie-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 24px;
+.uH .boxoffice-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
-.movie-card {
+
+/* ===== Movies ===== */
+.uH .movie-card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 12px;
   overflow: hidden;
 }
-.movie-poster {
-  height: 250px;
+
+.uH .movie-poster {
+  height: 190px;
   background: #d8d8d8;
 }
-.movie-info {
-  padding: 14px;
+
+.uH .movie-info {
+  padding: 12px;
 }
-.movie-info h3 {
-  font-size: 16px;
-  margin: 8px 0;
+
+.uH .movie-info h3 {
+  font-size: 14px;
 }
-.movie-info p {
-  font-size: 13px;
+
+.uH .movie-info p {
+  font-size: 12px;
   color: #777;
 }
-.movie-badge {
+
+.uH .movie-badge.premium {
+  background: var(--primary);
+  color: #fff;
   font-size: 11px;
   padding: 4px 8px;
   border-radius: 6px;
 }
-.movie-badge.premium {
-  background: var(--primary);
+
+/* ================= Slider ================= */
+
+.uH .slider-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.uH .slider-viewport {
+  overflow: hidden;
+  width: 100%;
+}
+
+.uH .slider-track {
+  display: flex;
+  transition: transform 0.4s ease;
+}
+
+.uH .slider-item {
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+/* ✅ 박스오피스 슬라이드 (크게) */
+.uH .boxoffice .slider-item {
+  width: 300px;
+  margin-right: 20px;
+}
+
+/* ✅ 현재 상영중 슬라이드 (작게) */
+.uH .section:not(.boxoffice) .slider-track .slider-item {
+  width: 200px;
+  margin-right: 20px;
+}
+
+/* ===== Arrow Buttons ===== */
+.uH .slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.5);
   color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.uH .slider-btn:hover {
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.uH .slider-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.uH .slider-btn.left {
+  left: -24px;
+}
+
+.uH .slider-btn.right {
+  right: -24px;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1000px) {
+  .uH .hero-inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 현재 상영중 영화 카드 크기 강제 고정 */
+.uH .section:not(.boxoffice) .movie-poster {
+  height: 160px;
+  overflow: hidden;
+}
+
+/* 🔥 img가 카드 키우는 거 차단 */
+.uH .section:not(.boxoffice) .movie-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* PREMIUM 카드 hover 효과 */
+.uH .boxoffice .boxoffice-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.uH .boxoffice .boxoffice-card:hover {
+  transform: scale(1.04);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
+
+.uH .slider-track.jump {
+  transition: none;
 }
 
 /* ===== Rooms ===== */
-.room-grid {
+.uH .section.gray {
+  background: var(--surface-soft);
+}
+
+.uH .room-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 24px;
 }
-.room-card {
+
+.uH .room-card {
   background: var(--surface);
   border-radius: 12px;
   padding: 28px;
   border: 1px solid var(--border);
 }
-.room-card h3 {
+
+.uH .room-card h3 {
   margin-bottom: 8px;
 }
 
 /* ===== Guide / FAQ / Notice ===== */
-.help-grid {
+.uH .section-link {
+  font-size: 13px;
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.uH .section-link:hover {
+  text-decoration: underline;
+}
+
+.uH .help-grid {
   display: grid;
   grid-template-columns: 1.2fr 0.9fr 0.9fr;
   gap: 24px;
 }
-.help-card {
+
+.uH .help-card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 22px;
 }
-.help-card__top {
+
+.uH .help-card__top {
   margin-bottom: 14px;
 }
-.help-pill {
+
+.uH .help-pill {
   display: inline-block;
   font-size: 11px;
   padding: 4px 10px;
@@ -256,28 +382,32 @@ body {
   color: var(--primary);
   font-weight: 600;
 }
-.help-title {
+
+.uH .help-title {
   font-size: 18px;
   margin: 10px 0 8px;
 }
-.help-desc {
+
+.uH .help-desc {
   font-size: 14px;
   color: var(--text-sub);
   line-height: 1.6;
 }
-.help-desc b {
+
+.uH .help-desc b {
   color: var(--text-main);
 }
 
 /* steps */
-.steps {
+.uH .steps {
   list-style: none;
   padding: 0;
   margin: 16px 0 14px;
   display: grid;
   gap: 10px;
 }
-.step {
+
+.uH .step {
   display: flex;
   gap: 10px;
   padding: 10px;
@@ -285,7 +415,8 @@ body {
   background: #fafafa;
   border: 1px solid var(--border);
 }
-.step-num {
+
+.uH .step-num {
   width: 26px;
   height: 26px;
   border-radius: 8px;
@@ -297,77 +428,80 @@ body {
   font-weight: 700;
   font-size: 13px;
 }
-.step-title {
+
+.uH .step-title {
   font-size: 14px;
   font-weight: 700;
 }
-.step-sub {
+
+.uH .step-sub {
   font-size: 12.5px;
   color: #777;
 }
 
 /* FAQ */
-.faq-mini {
+.uH .faq-mini {
   display: grid;
   gap: 10px;
   margin: 14px 0;
 }
-.faq-item {
+
+.uH .faq-item {
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 10px 12px;
 }
-.faq-item summary {
+
+.uH .faq-item summary {
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
 }
-.faq-item p {
+
+.uH .faq-item p {
   margin-top: 8px;
   font-size: 13px;
   color: #666;
 }
 
 /* Notice */
-.notice-mini {
+.uH .notice-mini {
   list-style: none;
   padding: 0;
   margin: 14px 0;
   display: grid;
   gap: 10px;
 }
-.notice-row {
+
+.uH .notice-row {
   display: flex;
   gap: 10px;
   padding: 10px 12px;
   border: 1px solid var(--border);
   border-radius: 10px;
 }
-.notice-date {
+
+.uH .notice-date {
   font-size: 12px;
   color: #777;
   min-width: 44px;
 }
-.notice-title {
+
+.uH .notice-title {
   font-size: 14px;
   font-weight: 600;
 }
 
 /* actions */
-.help-actions {
+.uH .help-actions {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
 }
 
-
-
 /* ===== Responsive ===== */
 @media (max-width: 1000px) {
-  .hero-inner {
-    grid-template-columns: 1fr;
-  }
-  .help-grid {
+  .uH .help-grid {
     grid-template-columns: 1fr;
   }
 }
