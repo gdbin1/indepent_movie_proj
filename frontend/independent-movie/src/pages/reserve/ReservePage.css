@@ -1,0 +1,131 @@
+/* ================= Page ================= */
+.uRP-page {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 32px 24px 120px;
+}
+
+/* ================= Header ================= */
+.uRP-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.uRP-title {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.uRP-btn-back {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #374151;
+}
+
+/* ================= Movie Info ================= */
+.uRP-movie-info {
+    background: #f1f1ee;
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 36px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* ================= Section ================= */
+.uRP-section {
+    margin-bottom: 40px;
+}
+
+.uRP-section-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 14px;
+}
+
+/* ================= Date ================= */
+.uRP-date-list {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+}
+
+.uRP-date-btn {
+    min-width: 80px;
+    padding: 12px 8px;
+    border-radius: 12px;
+    border: 1px solid #e4e4e2;
+    background: #fff;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.uRP-date-btn.active {
+    background: #5c6ac4;
+    border-color: #5c6ac4;
+    color: #fff;
+}
+
+/* ================= Schedule ================= */
+.uRP-schedule-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 12px;
+}
+
+.uRP-schedule-btn {
+    border: 1px solid #e4e4e2;
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px 12px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.uRP-schedule-btn.active {
+    border-color: #5c6ac4;
+    background: #eef0fb;
+}
+
+/* ================= Footer ================= */
+.uRP-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    border-top: 1px solid #e4e4e2;
+    padding: 16px 24px;
+}
+
+.uRP-btn-next {
+    width: 100%;
+    padding: 16px;
+    border-radius: 12px;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    background: #5c6ac4;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.uRP-btn-next:disabled {
+    background: #d1d5db;
+    cursor: not-allowed;
+}
+
+/* ================= Empty ================= */
+.uRP-empty {
+    padding: 20px;
+    background: #f9f9f8;
+    border-radius: 10px;
+    color: #6f6f6f;
+}

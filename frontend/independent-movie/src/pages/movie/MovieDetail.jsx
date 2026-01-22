@@ -60,12 +60,12 @@ export default function MovieDetail() {
           {/* ================= INFO ================= */}
           <div className="uMD-info-area">
             <span
-              className={`uMD-grade ${
-                movie.priceGrade === "PREMIUM" ? "premium" : "basic"
-              }`}
+              className={`uMD-grade ${movie.priceGrade === "PREMIUM" ? "premium" : "basic"
+                }`}
             >
-              {movie.priceGrade}
+              {movie.priceGrade || "BASIC"}
             </span>
+
 
             <h1 className="uMD-title">{movie.title}</h1>
 
@@ -126,9 +126,13 @@ export default function MovieDetail() {
 
             {/* ===== ACTIONS ===== */}
             <div className="uMD-actions">
-              <button className="uMD-btn-primary" disabled>
-                예매 준비 중
+              <button
+                className="uMD-btn-primary"
+                onClick={() => navigate(`/reserve/${movieId}`)}
+              >
+                예매하기
               </button>
+
               <button className="uMD-btn-outline">관심 영화</button>
               <button className="uMD-btn-back" onClick={() => navigate(-1)}>
                 ← 뒤로 가기

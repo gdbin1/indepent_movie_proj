@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.my.movietheater.schedule.mapper.ScheduleMapper">
+
+  <select id="selectSchedulesByMovieAndDate"
+          resultType="com.my.movietheater.schedule.dto.ScheduleResponseDto">
+
+    SELECT
+      s.schedule_id AS scheduleId,
+      r.room_name   AS roomName,
+
+      DATE_FORMAT(s.start_at, '%H:%i') AS startTime,
+      DATE_FORMAT(s.end_at, '%H:%i')   AS endTime,
+
+      s.price_final AS priceFinal
+    FROM schedule s
+    JOIN room r
+      ON s.room_id = r.room_id
+    WHERE s.movie_id = #{movieId}
+      AND s.display_date = #{displayDate}
+      AND r.is_active = 1
+      AND s.status = 'OPEN'
+    ORDER BY s.start_at ASC
+
+  </select>
+
+</mapper>

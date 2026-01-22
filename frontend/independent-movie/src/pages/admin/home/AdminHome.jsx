@@ -14,6 +14,9 @@ export default function AdminHome() {
   const [createMsg, setCreateMsg] = useState("");
   const [createLoading, setCreateLoading] = useState(false);
 
+  /* ===============================
+     박스오피스 데이터 갱신
+  =============================== */
   const handleUpdateBoxOffice = async () => {
     if (!targetDt) {
       alert("기준 날짜(targetDt)를 입력해주세요. (yyyyMMdd)");
@@ -41,11 +44,30 @@ export default function AdminHome() {
     }
   };
 
+  /* ===============================
+     BASIC 영화 등록
+  =============================== */
   const handleCreateMovie = async () => {
-    if (!title || !openDate) {
-      alert("제목과 개봉일은 필수 입력입니다.");
+    if (!title.trim()) {
+      alert("영화 제목은 필수 입력입니다.");
       return;
     }
+
+    let finalOpenDate = openDate;
+
+    // 개봉일 미입력 시 오늘 날짜 자동 세팅
+    if (!finalOpenDate) {
+      finalOpenDate = new Date().toISOString().slice(0, 10);
+      setOpenDate(finalOpenDate);
+    }
+
+    // YYYY-MM-DD 형식 간단 검증
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!dateRegex.test(finalOpenDate)) {
+      alert("개봉일 형식은 YYYY-MM-DD 입니다.");
+      return;
+    }
+
     if (createLoading) return;
 
     setCreateLoading(true);
@@ -56,11 +78,11 @@ export default function AdminHome() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          title,
-          description,
+          title: title.trim(),
+          description: description.trim(),
           runtimeMin: runtimeMin ? Number(runtimeMin) : null,
-          openDate,
-          posterUrl,
+          openDate: finalOpenDate,
+          posterUrl: posterUrl.trim(),
         }),
       });
 
@@ -69,6 +91,7 @@ export default function AdminHome() {
       const text = await res.text();
       setCreateMsg(text || "영화 등록 완료");
 
+      // 초기화
       setTitle("");
       setDescription("");
       setRuntimeMin("");
@@ -86,6 +109,9 @@ export default function AdminHome() {
     <div className="adH-page">
       <h1 className="adH-title">관리자 홈</h1>
 
+      {/* ===============================
+          박스오피스 관리
+      =============================== */}
       <section className="adH-card">
         <h2 className="adH-card-title">박스오피스 데이터 관리</h2>
 
@@ -119,6 +145,9 @@ export default function AdminHome() {
         {resultMsg && <p className="adH-result">{resultMsg}</p>}
       </section>
 
+      {/* ===============================
+          BASIC 영화 등록
+      =============================== */}
       <section className="adH-card">
         <h2 className="adH-card-title">현재 상영중인 영화 등록 (BASIC)</h2>
 
@@ -131,7 +160,7 @@ export default function AdminHome() {
         </p>
 
         <div className="adH-form-row">
-          <label className="adH-label">영화 제목 *</label>
+          <label className="adH-label required">영화 제목</label>
           <input
             type="text"
             className="adH-input"
@@ -154,13 +183,15 @@ export default function AdminHome() {
           <input
             type="number"
             className="adH-input"
+            min="0"
+            step="1"
             value={runtimeMin}
-            onChange={(e) => setRuntimeMin(e.target.value)}
+            onChange={(e) => setRuntimeMin(e.target.value.replace(/[^0-9]/g, ""))}
           />
         </div>
 
         <div className="adH-form-row">
-          <label className="adH-label">개봉일 *</label>
+          <label className="adH-label required">개봉일</label>
 
           <div className="adH-date-wrap">
             {/* 수기 입력 */}
@@ -182,7 +213,6 @@ export default function AdminHome() {
           </div>
         </div>
 
-
         <div className="adH-form-row">
           <label className="adH-label">포스터 URL</label>
           <input
@@ -201,7 +231,12 @@ export default function AdminHome() {
           {createLoading ? "영화 등록 중..." : "영화 등록"}
         </button>
 
-        {createMsg && <p className="adH-result">{createMsg}</p>}
+        {createMsg && (
+          <p className={`adH-result ${createMsg.includes("완료") ? "success" : "error"}`}>
+            {createMsg}
+          </p>
+        )}
+
       </section>
     </div>
   );

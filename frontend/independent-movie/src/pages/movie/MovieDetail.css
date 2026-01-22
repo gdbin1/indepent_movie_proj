@@ -51,13 +51,14 @@
 }
 
 .uMD-grade.premium {
-  background: #111;
+  background: #5c6ac4;
   color: #fff;
 }
 
 .uMD-grade.basic {
-  background: #f1f1f1;
-  color: #333;
+  background: #374151;
+  color: #ffffff;
+
 }
 
 .uMD-title {
@@ -139,7 +140,8 @@
   border: none;
   padding: 12px 20px;
   border-radius: 8px;
-  cursor: not-allowed;
+  cursor: pointer;
+  ;
 }
 
 .uMD-btn-outline {

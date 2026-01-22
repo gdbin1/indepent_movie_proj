@@ -7,6 +7,8 @@ import UserLayout from "./components/UserLayout.jsx";
 import Home from "./pages/Home/Home.jsx";
 import MovieList from "./pages/movie/MovieList.jsx";
 import MovieDetail from "./pages/movie/MovieDetail.jsx";
+import ReservePage from "./pages/reserve/ReservePage.jsx";
+import SeatSelect from "./pages/seat/SeatSelect.jsx";
 
 /* ================= ADMIN Pages ================= */
 import AdminHome from "./pages/admin/home/AdminHome.jsx";
@@ -32,6 +34,9 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/movies" element={<MovieList />} />
           <Route path="/movie/:movieId" element={<MovieDetail />} />
+          <Route path="/reserve/:movieId" element={<ReservePage />} />
+           <Route path="/reserve/seat/:movieId"element={<SeatSelect />}
+        />
           <Route path="/space" element={<Home />} />
           <Route path="/reservation" element={<Home />} />
         </Route>

@@ -1,0 +1,91 @@
+/* ===== Page ===== */
+.uSS-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.uSS-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+/* ===== Loading ===== */
+.uSS-loading {
+  text-align: center;
+  padding: 80px;
+  font-size: 16px;
+}
+
+/* ===== Seat Grid ===== */
+.uSS-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(48px, 1fr));
+  gap: 12px;
+  justify-items: center;
+  margin-bottom: 32px;
+}
+
+/* ===== Seat ===== */
+.uSS-seat {
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  background: #e4e4e2;
+  color: #333;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.15s ease;
+}
+
+.uSS-seat:hover {
+  background: #d6d6d4;
+}
+
+/* ===== Seat States ===== */
+.uSS-seat--reserved {
+  background: #bdbdbd;
+  color: #777;
+  cursor: not-allowed;
+}
+
+.uSS-seat--selected {
+  background: #5c6ac4;
+  color: #fff;
+}
+
+/* ===== Footer ===== */
+.uSS-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.uSS-selected-info {
+  font-size: 14px;
+  color: #444;
+}
+
+.uSS-next-btn {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  background: #5c6ac4;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.uSS-next-btn:disabled {
+  background: #c7c7c7;
+  cursor: not-allowed;
+}

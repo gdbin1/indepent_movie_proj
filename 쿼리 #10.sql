@@ -123,4 +123,21 @@ INSERT INTO users (
 SELECT * FROM movie;
 
 DELETE FROM movie 
-WHERE price_grade = 'BASIC';
+WHERE title = 123;
+
+SHOW TABLES;
+
+DESC SCHEDULE;
+DESC room;
+DESC reservation;
+DESC users;
+
+SELECT * FROM schedule;
+
+DELETE FROM schedule
+WHERE schedule_id = 1;
+
+
+
+
+
