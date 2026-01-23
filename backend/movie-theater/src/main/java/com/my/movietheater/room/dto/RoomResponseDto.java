@@ -18,4 +18,5 @@ public class RoomResponseDto {
     private int capacityMax;
 
     private int basePrice;
+    private Integer isActive;
 }

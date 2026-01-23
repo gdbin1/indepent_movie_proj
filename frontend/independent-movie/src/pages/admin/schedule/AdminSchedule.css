@@ -1,0 +1,82 @@
+/* =========================
+   Page
+========================= */
+.aSP-page {
+  max-width: 1100px;
+}
+
+.aSP-title {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+/* =========================
+   Form
+========================= */
+.aSP-form {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr) auto;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.aSP-form input,
+.aSP-form select {
+  padding: 10px 12px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.aSP-form button {
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  background: #5c6ac4;
+  color: #fff;
+  font-size: 14px;
+}
+
+/* =========================
+   List
+========================= */
+.aSP-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.aSP-empty {
+  color: #888;
+  font-size: 14px;
+}
+
+/* =========================
+   Card
+========================= */
+.aSP-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border-radius: 10px;
+  padding: 18px 20px;
+  border: 1px solid #e0e0e0;
+}
+
+.aSP-card p {
+  margin: 4px 0;
+  font-size: 16px;
+}
+
+.aSP-card span {
+  font-size: 13px;
+  color: #666;
+}
+
+.aSP-time {
+  font-size: 16px;
+  font-weight: 600;
+}

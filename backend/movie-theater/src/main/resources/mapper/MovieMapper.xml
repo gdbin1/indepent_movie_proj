@@ -76,6 +76,18 @@
         WHERE movie_id = #{movieId}
     </update>
 
+    <!-- ✅ ADMIN: 영화 수정 (핵심) -->
+    <update id="updateMovieForAdmin">
+        UPDATE movie
+        SET
+            runtime_min = #{runtimeMin},
+            description = #{description},
+            poster_url  = #{posterUrl},
+            price_grade = #{priceGrade},
+            updated_at  = NOW()
+        WHERE movie_id = #{movieId}
+    </update>
+
     <!-- ✅ ADMIN: 영화 삭제 -->
     <delete id="deleteMovie">
         DELETE FROM movie
@@ -115,7 +127,7 @@
         )
     </insert>
 
-    <!-- 기존 영화 업데이트 (제목 / 개봉일 정도만) -->
+    <!-- 기존 영화 업데이트 (KOBIS 재동기화용) -->
     <update id="updateMovieByMovieCd">
         UPDATE movie
         SET
@@ -124,5 +136,12 @@
             updated_at = NOW()
         WHERE movie_cd = #{movieCd}
     </update>
+
+    <!-- 러닝타임 조회 -->
+    <select id="selectRuntimeMinByMovieId" resultType="int">
+        SELECT runtime_min
+        FROM movie
+        WHERE movie_id = #{movieId}
+    </select>
 
 </mapper>
