@@ -1,91 +1,160 @@
 /* ===== Page ===== */
 .uSS-page {
-  max-width: 900px;
+  max-width: 720px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 32px 20px 140px;
+}
+
+/* ===== Header ===== */
+.uSS-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.uSS-back {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: none;
+  background: #f1f1ee;
+  cursor: pointer;
 }
 
 .uSS-title {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 700;
-  margin-bottom: 24px;
-  text-align: center;
 }
 
-/* ===== Loading ===== */
-.uSS-loading {
+/* ===== Loading / Empty ===== */
+.uSS-loading,
+.uSS-empty {
   text-align: center;
-  padding: 80px;
-  font-size: 16px;
+  padding: 80px 20px;
+  font-size: 15px;
+  color: #6f6f6f;
 }
 
-/* ===== Seat Grid ===== */
-.uSS-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(48px, 1fr));
-  gap: 12px;
-  justify-items: center;
+/* ===== Summary Card ===== */
+.uSS-summary-card {
+  background: #f9f9f8;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 28px;
+}
+
+.uSS-room-name {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.uSS-summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.uSS-label {
+  color: #6f6f6f;
+}
+
+.uSS-price {
+  font-weight: 700;
+  color: #5c6ac4;
+}
+
+/* ===== People ===== */
+.uSS-people-card {
+  background: #ffffff;
+  border: 1px solid #e4e4e2;
+  border-radius: 14px;
+  padding: 20px;
   margin-bottom: 32px;
 }
 
-/* ===== Seat ===== */
-.uSS-seat {
-  width: 48px;
-  height: 48px;
-  border-radius: 6px;
-  background: #e4e4e2;
-  color: #333;
-  font-size: 13px;
+.uSS-people-label {
+  display: block;
+  font-size: 15px;
   font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  user-select: none;
-  transition: all 0.15s ease;
+  margin-bottom: 10px;
 }
 
-.uSS-seat:hover {
-  background: #d6d6d4;
-}
-
-/* ===== Seat States ===== */
-.uSS-seat--reserved {
-  background: #bdbdbd;
-  color: #777;
-  cursor: not-allowed;
-}
-
-.uSS-seat--selected {
-  background: #5c6ac4;
-  color: #fff;
+.uSS-people-select {
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  font-size: 15px;
 }
 
 /* ===== Footer ===== */
 .uSS-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border-top: 1px solid #e4e4e2;
+  padding: 16px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 24px;
 }
 
-.uSS-selected-info {
-  font-size: 14px;
-  color: #444;
+.uSS-footer-price {
+  font-size: 16px;
+  font-weight: 700;
 }
 
 .uSS-next-btn {
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: 600;
-  background: #5c6ac4;
-  color: #fff;
+  padding: 14px 22px;
+  border-radius: 12px;
   border: none;
-  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 700;
+  background: #5c6ac4;
+  color: #ffffff;
   cursor: pointer;
 }
 
-.uSS-next-btn:disabled {
-  background: #c7c7c7;
-  cursor: not-allowed;
+/* ===== Room List ===== */
+.uSS-room-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 40px;
+}
+
+.uSS-room-card {
+  border: 1px solid #e4e4e2;
+  border-radius: 14px;
+  padding: 18px;
+  cursor: pointer;
+  background: #ffffff;
+}
+
+.uSS-room-card.active {
+  border-color: #5c6ac4;
+  background: #eef0fb;
+}
+
+.uSS-room-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.uSS-room-meta {
+  font-size: 14px;
+  color: #6f6f6f;
+  margin-bottom: 10px;
+}
+
+.uSS-room-price {
+  font-size: 15px;
+  font-weight: 700;
+  color: #5c6ac4;
 }

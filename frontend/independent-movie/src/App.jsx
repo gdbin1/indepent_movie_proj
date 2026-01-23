@@ -9,6 +9,8 @@ import MovieList from "./pages/movie/MovieList.jsx";
 import MovieDetail from "./pages/movie/MovieDetail.jsx";
 import ReservePage from "./pages/reserve/ReservePage.jsx";
 import SeatSelect from "./pages/seat/SeatSelect.jsx";
+import ReservationComplete from "./pages/reserve/ReservationComplete";
+
 
 /* ================= ADMIN Pages ================= */
 import AdminHome from "./pages/admin/home/AdminHome.jsx";
@@ -35,8 +37,8 @@ export default function App() {
           <Route path="/movies" element={<MovieList />} />
           <Route path="/movie/:movieId" element={<MovieDetail />} />
           <Route path="/reserve/:movieId" element={<ReservePage />} />
-           <Route path="/reserve/seat/:movieId"element={<SeatSelect />}
-        />
+          <Route path="/reserve/seat/:scheduleId" element={<SeatSelect />} />
+          <Route path="/reserve/complete/:reservationId" element={<ReservationComplete />} />
           <Route path="/space" element={<Home />} />
           <Route path="/reservation" element={<Home />} />
         </Route>

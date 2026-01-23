@@ -5,25 +5,68 @@
 
 <mapper namespace="com.my.movietheater.schedule.mapper.ScheduleMapper">
 
+  <!-- =========================
+       USER : 영화 + 날짜별 시간표 조회
+       (시간 슬롯만 반환)
+  ========================= -->
   <select id="selectSchedulesByMovieAndDate"
           resultType="com.my.movietheater.schedule.dto.ScheduleResponseDto">
 
     SELECT
       s.schedule_id AS scheduleId,
-      r.room_name   AS roomName,
-
       DATE_FORMAT(s.start_at, '%H:%i') AS startTime,
       DATE_FORMAT(s.end_at, '%H:%i')   AS endTime,
-
-      s.price_final AS priceFinal
+      s.status                         AS status
     FROM schedule s
-    JOIN room r
-      ON s.room_id = r.room_id
     WHERE s.movie_id = #{movieId}
       AND s.display_date = #{displayDate}
-      AND r.is_active = 1
       AND s.status = 'OPEN'
     ORDER BY s.start_at ASC
+
+  </select>
+
+
+  <!-- =========================
+       ADMIN : 상영 시간 슬롯 등록
+  ========================= -->
+  <insert id="insertSchedule"
+          parameterType="com.my.movietheater.schedule.dto.ScheduleCreateRequestDto"
+          useGeneratedKeys="true"
+          keyProperty="scheduleId">
+
+    INSERT INTO schedule (
+      movie_id,
+      display_date,
+      start_at,
+      end_at,
+      status
+    ) VALUES (
+      #{movieId},
+      #{displayDate},
+      #{startAt},
+      #{endAt},
+      #{status}
+    )
+
+  </insert>
+
+
+  <!-- =========================
+       USER : 시간 슬롯 단건 조회
+       (SeatSelect 진입용)
+  ========================= -->
+  <select id="selectScheduleById"
+          parameterType="long"
+          resultType="com.my.movietheater.schedule.dto.ScheduleResponseDto">
+
+    SELECT
+      s.schedule_id AS scheduleId,
+      DATE_FORMAT(s.start_at, '%H:%i') AS startTime,
+      DATE_FORMAT(s.end_at, '%H:%i')   AS endTime,
+      s.status                         AS status
+    FROM schedule s
+    WHERE s.schedule_id = #{scheduleId}
+      AND s.status = 'OPEN'
 
   </select>
 

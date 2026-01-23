@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.my.movietheater.reservation.mapper.ReservationMapper">
+
+    <!-- ✅ room 가격 조회 (서버에서 price_total 확정용) -->
+    <select id="selectRoomPrice" resultType="java.lang.Integer">
+        SELECT base_price
+        FROM room
+        WHERE room_id = #{roomId}
+          AND is_active = 1
+    </select>
+
+    <!-- ✅ schedule + room 기준 중복 예약 체크 -->
+    <select id="countByScheduleAndRoom" resultType="int">
+        SELECT COUNT(*)
+        FROM reservation
+        WHERE schedule_id = #{scheduleId}
+          AND room_id = #{roomId}
+          AND status = 'RESERVED'
+    </select>
+
+    <!-- 예약 INSERT -->
+    <insert id="insertReservation"
+            parameterType="com.my.movietheater.reservation.dto.ReservationDto"
+            useGeneratedKeys="true"
+            keyProperty="reservationId">
+
+        INSERT INTO reservation (
+            reservation_no,
+            user_id,
+            schedule_id,
+            room_id,
+            people_count,
+            price_total,
+            status
+        ) VALUES (
+            #{reservationNo},
+            #{userId},
+            #{scheduleId},
+            #{roomId},
+            #{peopleCount},
+            #{priceTotal},
+            #{status}
+        )
+    </insert>
+
+    <!-- 예약 단건 조회 -->
+    <select id="selectReservationById"
+            resultType="com.my.movietheater.reservation.dto.ReservationDto">
+        SELECT
+            reservation_id   AS reservationId,
+            reservation_no   AS reservationNo,
+            user_id          AS userId,
+            schedule_id      AS scheduleId,
+            room_id          AS roomId,
+            people_count     AS peopleCount,
+            price_total      AS priceTotal,
+            status,
+            canceled_at      AS canceledAt,
+            created_at       AS createdAt,
+            updated_at       AS updatedAt
+        FROM reservation
+        WHERE reservation_id = #{reservationId}
+    </select>
+
+    <!-- 예약 취소 -->
+    <update id="cancelReservation">
+        UPDATE reservation
+        SET
+            status = 'CANCELLED',
+            canceled_at = NOW()
+        WHERE reservation_id = #{reservationId}
+          AND status = 'RESERVED'
+    </update>
+
+</mapper>

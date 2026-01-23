@@ -1,0 +1,73 @@
+.uRC-wrap {
+  max-width: 420px;
+  margin: 60px auto;
+  padding: 0 16px;
+}
+
+.uRC-title {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.uRC-card {
+  border: 1px solid #e4e4e2;
+  border-radius: 12px;
+  padding: 20px;
+  background: #fff;
+}
+
+.uRC-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.uRC-row span {
+  color: #666;
+}
+
+.uRC-active {
+  color: #2e7d32;
+}
+
+.uRC-cancelled {
+  color: #c62828;
+}
+
+.uRC-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.uRC-btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+}
+
+.uRC-btn.secondary {
+  background: #f1f1ee;
+  color: #333;
+}
+
+.uRC-btn.danger {
+  background: #d32f2f;
+  color: #fff;
+}
+
+.uRC-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.uRC-error {
+  text-align: center;
+  color: #c62828;
+}

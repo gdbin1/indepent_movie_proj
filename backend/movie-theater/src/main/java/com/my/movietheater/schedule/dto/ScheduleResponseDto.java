@@ -6,11 +6,10 @@ import lombok.Data;
 public class ScheduleResponseDto {
 
     private Long scheduleId;
-    private String roomName;
 
-    // start_at / end_at → HH:mm 로 내려줌
+    // start_at / end_at → HH:mm
     private String startTime;
     private String endTime;
 
-    private int priceFinal;
+    private String status;
 }

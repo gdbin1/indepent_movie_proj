@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.my.movietheater.room.mapper.RoomMapper">
+
+  <!-- =========================
+       USER : 인원수 + 스케줄 기준
+       예약 가능한 방 조회
+  ========================= -->
+  <select id="selectAvailableRooms"
+          resultType="com.my.movietheater.room.dto.RoomResponseDto">
+
+    SELECT
+      r.room_id       AS roomId,
+      r.room_code     AS roomCode,
+      r.room_name     AS roomName,
+      r.room_type     AS roomType,
+      r.theme         AS theme,
+      r.description   AS description,
+      r.image_url     AS imageUrl,
+      r.capacity_min  AS capacityMin,
+      r.capacity_max  AS capacityMax,
+      r.base_price    AS basePrice
+    FROM room r
+    WHERE r.is_active = 1
+      AND r.capacity_min &lt;= #{peopleCount}
+      AND r.capacity_max &gt;= #{peopleCount}
+      AND r.room_id NOT IN (
+        SELECT res.room_id
+        FROM reservation res
+        WHERE res.schedule_id = #{scheduleId}
+          AND res.status = 'CONFIRMED'
+      )
+    ORDER BY r.base_price ASC
+
+  </select>
+
+</mapper>
