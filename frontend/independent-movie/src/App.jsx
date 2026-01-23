@@ -1,55 +1,65 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
+/* ================= Layout ================= */
+import UserLayout from "./components/UserLayout.jsx";
+
+/* ================= USER Pages ================= */
 import Home from "./pages/Home/Home.jsx";
+import MovieList from "./pages/movie/MovieList.jsx";
+import MovieDetail from "./pages/movie/MovieDetail.jsx";
+import ReservePage from "./pages/reserve/ReservePage.jsx";
+import SeatSelect from "./pages/seat/SeatSelect.jsx";
+
+/* ================= ADMIN Pages ================= */
 import AdminHome from "./pages/admin/home/AdminHome.jsx";
 import AdminMovie from "./pages/admin/movie/AdminMovie.jsx";
 
+/* ================= ADMIN ROUTE GUARD ================= */
+function AdminRoute({ children }) {
+  const role = localStorage.getItem("role")?.trim().toUpperCase();
 
-import NavigationUser from "./components/NavigationUser.jsx";
-import NavigationAdmin from "./components/NavigationAdmin.jsx";
+  if (role !== "ADMIN") {
+    return <Navigate to="/" replace />;
+  }
 
-import MovieDetail from "./pages/movie/MovieDetail";
+  return children;
+}
 
 export default function App() {
-  // ✅ role 정규화 (공백 / 대소문자 문제 방지)
-  const role = localStorage.getItem("role")?.trim().toUpperCase();
-  console.log("ROLE =", JSON.stringify(role));
-
   return (
     <BrowserRouter>
-      {/* ================= Navigation ================= */}
-      {role === "ADMIN" ? <NavigationAdmin /> : <NavigationUser />}
-
-      {/* ================= Routes ================= */}
       <Routes>
-        {/* ===== USER ROUTES ===== */}
-        <Route path="/" element={<Home />} />
-        <Route path="/movies" element={<Home />} />
-        <Route path="/reservation" element={<Home />} />
-        <Route path="/movie/:movieId" element={<MovieDetail />} />
+        {/* ================= USER ROUTES ================= */}
+        <Route element={<UserLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/movies" element={<MovieList />} />
+          <Route path="/movie/:movieId" element={<MovieDetail />} />
+          <Route path="/reserve/:movieId" element={<ReservePage />} />
+           <Route path="/reserve/seat/:movieId"element={<SeatSelect />}
+        />
+          <Route path="/space" element={<Home />} />
+          <Route path="/reservation" element={<Home />} />
+        </Route>
 
-        {/* ===== ADMIN ROUTES ===== */}
+        {/* ================= ADMIN ROUTES ================= */}
         <Route
-          path="/admin"
+          path="/admin/home"
           element={
-            role === "ADMIN" ? (
-              <Navigate to="/admin/home" replace />
-            ) : (
-              <Navigate to="/" replace />
-            )
+            <AdminRoute>
+              <AdminHome />
+            </AdminRoute>
           }
         />
         <Route
           path="/admin/movie"
-          element={role === "ADMIN" ? <AdminMovie /> : <Navigate to="/" replace />}
+          element={
+            <AdminRoute>
+              <AdminMovie />
+            </AdminRoute>
+          }
         />
 
-        <Route
-          path="/admin/home"
-          element={role === "ADMIN" ? <AdminHome /> : <Navigate to="/" replace />}
-        />
-
-        {/* ===== NOT FOUND ===== */}
+        {/* ================= NOT FOUND ================= */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

@@ -38,4 +38,23 @@ public class MovieController {
     ) {
         return movieService.getMovieDetail(movieId);
     }
+    
+    /**
+     * USER - 현재 상영 중 BASIC 영화
+     */
+    @GetMapping("/active/basic")
+    public List<MovieDto> getActiveBasicMovies() {
+        return movieService.getActiveMoviesByGrade("BASIC");
+    }
+
+    /**
+     * USER - 현재 상영 중 PREMIUM 영화
+     */
+    @GetMapping("/active/premium")
+    public List<MovieDto> getActivePremiumMovies() {
+        return movieService.getActiveMoviesByGrade("PREMIUM");
+    }
+
+    
+    
 }

@@ -1,40 +1,101 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "../Home/Home.css";
+import { useNavigate, NavLink } from "react-router-dom";
+import "./Home.css";
 import api from "../../api";
-import UserLayout from "../../components/UserLayout";
+
+/* ================= CONFIG ================= */
+const LIMIT_COUNT = 6;
+const LOOP_COUNT = 6;
+
+const PREMIUM_SLIDE_WIDTH = 280;
+const MOVIE_SLIDE_WIDTH = 220;
 
 export default function Home() {
-  const [premiumMovies, setPremiumMovies] = useState([]);
   const navigate = useNavigate();
 
-  /* ================= PREMIUM BOX OFFICE ================= */
+  const [premiumMovies, setPremiumMovies] = useState([]);
+  const [movies, setMovies] = useState([]);
+
+  // PREMIUM은 무한 슬라이드 전제
+  const [premiumIndex, setPremiumIndex] = useState(LOOP_COUNT);
+  // BASIC은 개수에 따라 달라지므로 0부터 시작
+  const [movieIndex, setMovieIndex] = useState(0);
+
+  /* ================= MOVIE FETCH ================= */
   useEffect(() => {
-    fetchPremiumMovies();
+    const fetchMovies = async () => {
+      try {
+        const premiumRes = await api.get("/movie/active/premium");
+        const basicRes = await api.get("/movie/active/basic");
+
+        setPremiumMovies(premiumRes.data || []);
+        setMovies(basicRes.data || []);
+      } catch (e) {
+        console.error("영화 목록 조회 실패", e);
+      }
+    };
+    fetchMovies();
   }, []);
 
-  const fetchPremiumMovies = async () => {
-    try {
-      const res = await api.get("/movie/active");
-      setPremiumMovies(res.data);
-    } catch (e) {
-      console.error("박스오피스(PREMIUM) 영화 조회 실패", e);
+  /* ================= 6개 제한 ================= */
+  const basePremium = premiumMovies.slice(0, LIMIT_COUNT);
+  const baseMovies = movies.slice(0, LIMIT_COUNT);
+
+  const isPremiumLoop = basePremium.length === LIMIT_COUNT;
+  const isMovieLoop = baseMovies.length === LIMIT_COUNT;
+
+  /* ================= 슬라이드 배열 ================= */
+  const premiumLoop = isPremiumLoop
+    ? [
+      ...basePremium.slice(-LOOP_COUNT),
+      ...basePremium,
+      ...basePremium.slice(0, LOOP_COUNT),
+    ]
+    : basePremium;
+
+  const movieLoop = isMovieLoop
+    ? [
+      ...baseMovies.slice(-LOOP_COUNT),
+      ...baseMovies,
+      ...baseMovies.slice(0, LOOP_COUNT),
+    ]
+    : baseMovies;
+
+  /* ================= PREMIUM 순간이동 ================= */
+  useEffect(() => {
+    if (!isPremiumLoop) return;
+
+    if (premiumIndex === basePremium.length + LOOP_COUNT) {
+      setTimeout(() => setPremiumIndex(LOOP_COUNT), 400);
     }
-  };
+    if (premiumIndex === 0) {
+      setTimeout(() => setPremiumIndex(basePremium.length), 400);
+    }
+  }, [premiumIndex, basePremium.length, isPremiumLoop]);
+
+  /* ================= BASIC 순간이동 ================= */
+  useEffect(() => {
+    if (!isMovieLoop) return;
+
+    if (movieIndex === baseMovies.length + LOOP_COUNT) {
+      setTimeout(() => setMovieIndex(LOOP_COUNT), 400);
+    }
+    if (movieIndex === 0) {
+      setTimeout(() => setMovieIndex(baseMovies.length), 400);
+    }
+  }, [movieIndex, baseMovies.length, isMovieLoop]);
 
   return (
-    <UserLayout>
+    <div className="uH">
       {/* ================= Hero ================= */}
       <section className="hero">
         <div className="container hero-inner">
           <div className="hero-text">
             <span className="hero-badge">Private Cinema</span>
-
             <h1>
               좌석이 아닌 <br />
               <strong>공간을 예약하는 영화관</strong>
             </h1>
-
             <p>
               커플룸, 프라이빗룸, 단체룸까지 <br />
               당신만을 위한 독립 영화관을 예약하세요.
@@ -42,7 +103,12 @@ export default function Home() {
 
             <div className="hero-actions">
               <button className="btn-primary">지금 예약하기</button>
-              <button className="btn-outline">영화 둘러보기</button>
+              <button
+                className="btn-outline"
+                onClick={() => navigate("/movies")}
+              >
+                영화 둘러보기
+              </button>
             </div>
           </div>
 
@@ -56,81 +122,119 @@ export default function Home() {
       <section className="section boxoffice">
         <div className="container">
           <div className="section-head">
-            <h2 className="section-title">박스오피스 상영 Premium</h2>
-            <span className="section-sub">지금 가장 인기 있는 영화</span>
+            <div>
+              <h2 className="section-title">박스오피스 상영 Premium</h2>
+              <span className="section-sub">지금 가장 인기 있는 영화</span>
+            </div>
+            <NavLink to="/movies" className="section-more">
+              전체 리스트 보러가기 →
+            </NavLink>
           </div>
 
-          <div className="boxoffice-grid">
-            {premiumMovies.map((movie) => (
+          <div className="slider-wrapper">
+            <button
+              className="slider-btn left"
+              onClick={() => setPremiumIndex((p) => p - 1)}
+            >
+              ‹
+            </button>
+
+            <div className="slider-viewport">
               <div
-                key={movie.movieId}
-                className="boxoffice-card"
-                onClick={() => navigate(`/movie/${movie.movieId}`)}
-                style={{ cursor: "pointer" }}
+                className="slider-track"
+                style={{
+                  transform: `translateX(-${premiumIndex * PREMIUM_SLIDE_WIDTH
+                    }px)`,
+                }}
               >
-                <div className="boxoffice-poster">
-                  {movie.posterUrl ? (
-                    <img src={movie.posterUrl} alt={movie.title} />
-                  ) : null}
-                </div>
-
-                <div className="boxoffice-info">
-                  <span className="movie-badge premium">PREMIUM</span>
-                  <h3>{movie.title}</h3>
-                  <p>오늘 상영 가능</p>
-                </div>
+                {premiumLoop.map((movie, idx) => (
+                  <div
+                    key={`${movie.movieId}-${idx}`}
+                    className="boxoffice-card slider-item"
+                    onClick={() => navigate(`/movie/${movie.movieId}`)}
+                  >
+                    <div className="boxoffice-poster">
+                      {movie.posterUrl && (
+                        <img src={movie.posterUrl} alt={movie.title} />
+                      )}
+                    </div>
+                    <div className="boxoffice-info">
+                      <span className="movie-badge premium">PREMIUM</span>
+                      <h3>{movie.title}</h3>
+                      <p>오늘 상영 가능</p>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </div>
 
-          {premiumMovies.length === 0 && (
-            <p className="empty-text">
-              현재 박스오피스 상영 영화가 없습니다.
-            </p>
-          )}
+            <button
+              className="slider-btn right"
+              onClick={() => setPremiumIndex((p) => p + 1)}
+            >
+              ›
+            </button>
+          </div>
         </div>
       </section>
 
-      {/* ================= Movies (BASIC / 가데이터 유지) ================= */}
+      {/* ================= Movies (BASIC) ================= */}
       <section className="section">
         <div className="container">
-          <h2 className="section-title">현재 상영 중인 영화</h2>
-
-          <div className="movie-grid">
-            {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="movie-card">
-                <div className="movie-poster" />
-                <div className="movie-info">
-                  <span className="movie-badge premium">PREMIUM</span>
-                  <h3>영화 제목 {i}</h3>
-                  <p>러닝타임 120분</p>
-                </div>
-              </div>
-            ))}
+          <div className="section-head">
+            <h2 className="section-title">현재 상영 중인 영화</h2>
+            <NavLink to="/movies" className="section-more">
+              전체 리스트 보러가기 →
+            </NavLink>
           </div>
-        </div>
-      </section>
 
-      {/* ================= Rooms ================= */}
-      <section className="section gray">
-        <div className="container">
-          <h2 className="section-title">프라이빗 공간</h2>
+          <div className="slider-wrapper">
+            {isMovieLoop && (
+              <button
+                className="slider-btn left"
+                onClick={() => setMovieIndex((p) => p - 1)}
+              >
+                ‹
+              </button>
+            )}
 
-          <div className="room-grid">
-            <div className="room-card">
-              <h3>커플룸</h3>
-              <p>2인 전용 프라이빗 공간</p>
+            <div className="slider-viewport">
+              <div
+                className="slider-track"
+                style={{
+                  transform: `translateX(-${movieIndex * MOVIE_SLIDE_WIDTH
+                    }px)`,
+                }}
+              >
+                {movieLoop.map((movie, idx) => (
+                  <div
+                    key={`${movie.movieId}-${idx}`}
+                    className="movie-card slider-item"
+                    onClick={() => navigate(`/movie/${movie.movieId}`)}
+                  >
+                    <div className="movie-poster">
+                      {movie.posterUrl && (
+                        <img src={movie.posterUrl} alt={movie.title} />
+                      )}
+                    </div>
+                    <div className="movie-info">
+                      <span className="movie-badge basic">BASIC</span>
+                      <h3>{movie.title}</h3>
+                      <p>러닝타임 {movie.runtimeMin || "-"}분</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <div className="room-card">
-              <h3>프라이빗룸</h3>
-              <p>4~5인 소규모 관람</p>
-            </div>
-
-            <div className="room-card">
-              <h3>단체룸</h3>
-              <p>6인 이상 단체 관람</p>
-            </div>
+            {isMovieLoop && (
+              <button
+                className="slider-btn right"
+                onClick={() => setMovieIndex((p) => p + 1)}
+              >
+                ›
+              </button>
+            )}
           </div>
         </div>
       </section>
@@ -267,6 +371,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-    </UserLayout>
+
+    </div>
   );
 }

@@ -1,77 +1,140 @@
-.admin-page {
-  padding: 32px;
+.adH-page {
   min-height: 100vh;
   background: #f5f6f8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 24px;
 }
 
-.admin-title {
+.adH-title {
+  width: 100%;
+  max-width: 960px;
   font-size: 28px;
   font-weight: 700;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 
-.admin-card {
-  max-width: 720px;
+.adH-card {
+  width: 100%;
+  max-width: 960px;
   background: #ffffff;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+  padding: 32px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  margin-bottom: 40px;
 }
 
-.admin-card-title {
-  font-size: 18px;
+.adH-card-title {
+  font-size: 20px;
   font-weight: 600;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
-.admin-desc {
+.adH-desc {
   font-size: 14px;
   color: #666;
-  line-height: 1.6;
-  margin-bottom: 20px;
+  line-height: 1.7;
+  margin-bottom: 28px;
 }
 
-.admin-btn {
-  padding: 12px 20px;
-  border-radius: 8px;
-  border: none;
-  background: #111;
-  color: #fff;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
+.adH-form-row {
+  margin-bottom: 18px;
 }
 
-.admin-btn:hover {
-  opacity: 0.9;
-}
-
-.admin-form-row {
-  margin-bottom: 16px;
-}
-
-.admin-label {
+.adH-label {
   display: block;
   font-size: 13px;
   margin-bottom: 6px;
   color: #333;
+  font-weight: 500;
 }
 
-.admin-input {
+/* 필수 입력 라벨 표시 */
+.adH-label.required::after {
+  content: " *";
+  color: #e11d48;
+  font-weight: 700;
+}
+
+.adH-input,
+.adH-textarea {
   width: 100%;
-  padding: 10px 12px;
-  border-radius: 6px;
+  padding: 12px 14px;
+  border-radius: 8px;
   border: 1px solid #ccc;
   font-size: 14px;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-.admin-result {
-  margin-top: 16px;
+/* input focus UX */
+.adH-input:focus,
+.adH-textarea:focus {
+  outline: none;
+  border-color: #111;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.08);
+}
+
+/* 에러 상태 */
+.adH-input.error,
+.adH-textarea.error {
+  border-color: #e11d48;
+  background: #fff5f7;
+}
+
+.adH-textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* 개봉일 입력 영역 */
+.adH-date-wrap {
+  display: flex;
+  gap: 10px;
+}
+
+.adH-date-picker {
+  max-width: 220px;
+}
+
+.adH-btn {
+  margin-top: 12px;
+  padding: 14px 24px;
+  border-radius: 10px;
+  border: none;
+  background: #111;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s ease, transform 0.05s ease;
+}
+
+.adH-btn:hover {
+  opacity: 0.9;
+}
+
+.adH-btn:active {
+  transform: translateY(1px);
+}
+
+.adH-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* 결과 메시지 */
+.adH-result {
+  margin-top: 18px;
   font-size: 14px;
   color: #333;
 }
 
-.admin-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+.adH-result.success {
+  color: #166534;
+}
+
+.adH-result.error {
+  color: #b91c1c;
 }

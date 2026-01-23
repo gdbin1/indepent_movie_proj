@@ -119,3 +119,25 @@ INSERT INTO users (
   
   'ADMIN'
 );
+
+SELECT * FROM movie;
+
+DELETE FROM movie 
+WHERE title = 123;
+
+SHOW TABLES;
+
+DESC SCHEDULE;
+DESC room;
+DESC reservation;
+DESC users;
+
+SELECT * FROM schedule;
+
+DELETE FROM schedule
+WHERE schedule_id = 1;
+
+
+
+
+

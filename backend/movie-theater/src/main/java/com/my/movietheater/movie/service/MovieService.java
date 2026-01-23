@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.my.movietheater.kobis.dto.WeeklyBoxOfficeDto;
+import com.my.movietheater.movie.dto.AdminMovieCreateRequest;
 import com.my.movietheater.movie.dto.AdminMovieDto;
 import com.my.movietheater.movie.dto.MovieDto;
 import com.my.movietheater.movie.mapper.MovieMapper;
@@ -17,14 +18,24 @@ import lombok.RequiredArgsConstructor;
 public class MovieService {
 
     private final MovieMapper movieMapper;
-    
+
     /**
-     * USER - 현재 상영 중 영화 목록 조회
-     * is_active = 1 인 영화만 반환 (PREMIUM)
+     * USER - 현재 상영 중 영화 전체 조회
+     * is_active = 1
      */
     @Transactional(readOnly = true)
     public List<MovieDto> getActiveMovies() {
         return movieMapper.selectActiveMovies();
+    }
+
+    /**
+     * USER - 현재 상영 중 영화 (등급별)
+     * is_active = 1
+     * price_grade = BASIC / PREMIUM
+     */
+    @Transactional(readOnly = true)
+    public List<MovieDto> getActiveMoviesByGrade(String priceGrade) {
+        return movieMapper.selectActiveMoviesByGrade(priceGrade);
     }
 
     /**
@@ -38,8 +49,8 @@ public class MovieService {
     /**
      * KOBIS 박스오피스 → movie 테이블 저장
      * - ADMIN 전용
-     * - 최초 저장 시 is_active = 1 (상영/노출 ON)
-     * - 이미 존재하면 기본 정보만 업데이트
+     * - price_grade = PREMIUM
+     * - 최초 저장 시 is_active = 1
      */
     @Transactional
     public void saveMoviesFromBoxOffice(List<WeeklyBoxOfficeDto> boxOfficeList) {
@@ -52,13 +63,10 @@ public class MovieService {
             movie.setTitle(dto.getMovieNm());
             movie.setOpenDate(dto.getOpenDt());
 
-            // 초기값 (운영 단계에서 ADMIN이 수정 가능)
             movie.setDescription(null);
             movie.setRuntimeMin(0);
             movie.setPosterUrl(null);
             movie.setPriceGrade("PREMIUM");
-
-            // ⭐ 중요: 상영/노출 여부
             movie.setIsActive(1);
 
             int exists = movieMapper.existsByMovieCd(dto.getMovieCd());
@@ -69,6 +77,26 @@ public class MovieService {
                 movieMapper.updateMovieByMovieCd(movie);
             }
         }
+    }
+
+    /**
+     * ADMIN - 수동 영화 등록 (BASIC)
+     */
+    @Transactional
+    public void createBasicMovie(AdminMovieCreateRequest request) {
+
+        MovieDto movie = new MovieDto();
+        movie.setSource("ADMIN");
+        movie.setMovieCd(null);
+        movie.setTitle(request.getTitle());
+        movie.setDescription(request.getDescription());
+        movie.setRuntimeMin(request.getRuntimeMin());
+        movie.setOpenDate(request.getOpenDate());
+        movie.setPosterUrl(request.getPosterUrl());
+        movie.setPriceGrade("BASIC");
+        movie.setIsActive(1);
+
+        movieMapper.insertMovie(movie);
     }
 
     /**
@@ -86,5 +114,26 @@ public class MovieService {
     public void updateMovieActive(Long movieId, boolean isActive) {
         int activeValue = isActive ? 1 : 0;
         movieMapper.updateMovieActive(movieId, activeValue);
+    }
+
+    /**
+     * ✅ ADMIN - 영화 삭제
+     * - BASIC : 삭제 가능
+     * - PREMIUM : 삭제 불가 (박스오피스 데이터 보호)
+     */
+    @Transactional
+    public void deleteMovie(Long movieId) {
+
+        MovieDto movie = movieMapper.selectMovieById(movieId);
+
+        if (movie == null) {
+            throw new IllegalArgumentException("존재하지 않는 영화입니다.");
+        }
+
+        if ("PREMIUM".equals(movie.getPriceGrade())) {
+            throw new IllegalStateException("PREMIUM 영화는 삭제할 수 없습니다.");
+        }
+
+        movieMapper.deleteMovie(movieId);
     }
 }

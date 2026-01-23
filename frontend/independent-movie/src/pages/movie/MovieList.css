@@ -1,0 +1,165 @@
+/* ================= Page ================= */
+.uML-page {
+  padding: 40px 0;
+}
+
+.uML-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ================= Section ================= */
+.uML-section {
+  margin-bottom: 60px;
+}
+
+.uML-section-head {
+  margin-bottom: 18px;
+}
+
+.uML-section-title {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.uML-section-sub {
+  font-size: 14px;
+  color: #777;
+}
+
+/* ================= Box Office (PREMIUM) ================= */
+
+.uML-boxoffice-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 28px;
+}
+
+.uML-boxoffice-card {
+  display: flex;
+  gap: 16px;
+  padding: 18px;
+  background: #ffffff;
+  border: 1px solid #e4e4e2;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.uML-boxoffice-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+.uML-boxoffice-poster {
+  width: 120px;
+  height: 180px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #ddd;
+}
+
+.uML-boxoffice-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.uML-boxoffice-info h3 {
+  font-size: 17px;
+  margin: 6px 0;
+}
+
+.uML-boxoffice-info p {
+  font-size: 13px;
+  color: #777;
+}
+
+/* ================= 일반 영화 ================= */
+
+.uML-movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 22px;
+}
+
+.uML-movie-card {
+  background: #ffffff;
+  border: 1px solid #e4e4e2;
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.uML-movie-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+}
+
+.uML-movie-poster {
+  height: 240px;
+  background: #ddd;
+  overflow: hidden;
+}
+
+.uML-movie-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.uML-movie-info {
+  padding: 14px;
+}
+
+.uML-movie-info h3 {
+  font-size: 15px;
+  margin: 6px 0;
+}
+
+.uML-movie-info p {
+  font-size: 13px;
+  color: #777;
+}
+
+/* ================= Badge ================= */
+
+.uML-badge {
+  display: inline-block;
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  margin-bottom: 6px;
+}
+
+.uML-badge.premium {
+  background: #5c6ac4;
+  color: #fff;
+}
+
+.uML-badge.basic {
+  background-color: #374151;
+  color: #fff;
+}
+
+/* ================= Empty ================= */
+
+.uML-empty-text {
+  font-size: 14px;
+  color: #777;
+  margin-top: 16px;
+}
+
+/* ================= Responsive ================= */
+
+@media (max-width: 768px) {
+  .uML-boxoffice-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .uML-movie-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
