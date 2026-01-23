@@ -27,13 +27,25 @@ export default function ReservationComplete() {
     }
   };
 
+  const getStatusLabel = (status) => {
+    switch (status) {
+      case "RESERVED":
+        return "예약 완료";
+      case "CANCELLED":
+        return "예약 취소";
+      default:
+        return "예약 실패";
+    }
+  };
+
+
   const handleCancel = async () => {
     if (!window.confirm("예약을 취소하시겠습니까?")) return;
 
     try {
       await api.patch(`/reservations/${reservationId}/cancel`);
       alert("예약이 취소되었습니다.");
-      fetchReservation(); // 상태 다시 조회
+      fetchReservation();
     } catch (e) {
       if (e.response?.status === 409) {
         alert(e.response.data.message);
@@ -43,24 +55,55 @@ export default function ReservationComplete() {
     }
   };
 
-  if (loading) return <div className="uRC-wrap">로딩 중...</div>;
-  if (errorMsg) return <div className="uRC-wrap uRC-error">{errorMsg}</div>;
+  if (loading) {
+    return <div className="uRC-wrap uRC-center">예약 정보를 불러오는 중입니다…</div>;
+  }
+
+  if (errorMsg) {
+    return <div className="uRC-wrap uRC-error">{errorMsg}</div>;
+  }
+
   if (!reservation) return null;
 
   const isCancelled = reservation.status === "CANCELLED";
 
   return (
     <div className="uRC-wrap">
-      <h2 className="uRC-title">예약 완료</h2>
+      {/* ===== Success Header ===== */}
+      <div className="uRC-success">
+        <div className="uRC-check">✓</div>
+        <h2 className="uRC-title">
+          {isCancelled ? "예약이 취소되었습니다" : "예약이 완료되었습니다"}
+        </h2>
+        <p className="uRC-sub">
+          {isCancelled
+            ? "예약 내역은 아래에서 확인할 수 있습니다."
+            : "선택하신 내용으로 예약이 정상 처리되었습니다."}
+        </p>
+      </div>
 
-      <div className="uRC-card">
-        <div className="uRC-row">
+      {/* ===== Summary Card ===== */}
+      <div className="uRC-summary-card">
+        <div className="uRC-summary-row">
           <span>예약 번호</span>
           <strong>{reservation.reservationNo}</strong>
         </div>
 
+        <div className="uRC-summary-row">
+          <span>예약 상태</span>
+          <span
+            className={`uRC-badge ${isCancelled ? "cancelled" : "active"}`}
+          >
+            {getStatusLabel(reservation.status)}
+          </span>
+
+        </div>
+      </div>
+
+      {/* ===== Detail Card ===== */}
+      <div className="uRC-card">
         <div className="uRC-row">
-          <span>인원</span>
+          <span>이용 인원</span>
           <strong>{reservation.peopleCount}명</strong>
         </div>
 
@@ -70,20 +113,14 @@ export default function ReservationComplete() {
         </div>
 
         <div className="uRC-row">
-          <span>예약 상태</span>
-          <strong className={isCancelled ? "uRC-cancelled" : "uRC-active"}>
-            {reservation.status}
-          </strong>
-        </div>
-
-        <div className="uRC-row">
-          <span>예약 시간</span>
+          <span>예약 일시</span>
           <strong>
             {reservation.createdAt?.replace("T", " ")}
           </strong>
         </div>
       </div>
 
+      {/* ===== Actions ===== */}
       <div className="uRC-actions">
         <button
           className="uRC-btn secondary"

@@ -124,3 +124,55 @@ DESC movie;
 DELETE FROM movie;
 SELECT * FROM movie;
 SELECT * FROM users;
+
+DESC schedule;
+SELECT * FROM schedule;
+
+
+UPDATE room
+SET is_active = 1
+WHERE room_id = 1;
+
+SELECT * FROM room;
+SELECT * FROM schedule;
+SELECT * FROM movie;
+DESC room;
+
+UPDATE schedule
+SET movie_id = 15
+WHERE schedule_id = 1;
+
+
+INSERT INTO room (
+  room_code,room_name,room_type,capacity_min,capacity_max,base_price,is_active
+) VALUES ('ROOM_1','커플룸 A','COUPLE',2,2,30000,1
+);
+
+DESC reservation;
+SELECT * FROM reservation;
+SELECT * FROM movie;
+SELECT * FROM room;
+SELECT * FROM schedule;
+
+DESC schedule;
+DESC room;
+DESC reservation;
+
+-- room_id 제거
+ALTER TABLE schedule
+DROP COLUMN room_id;
+
+-- price_final 제거
+ALTER TABLE schedule
+DROP COLUMN price_final;
+
+ALTER TABLE room
+ADD COLUMN theme VARCHAR(100) AFTER room_type,
+ADD COLUMN description VARCHAR(255) AFTER theme,
+ADD COLUMN image_url VARCHAR(255) AFTER DESCRIPTION;
+
+ALTER TABLE reservation
+ADD COLUMN room_id BIGINT NOT NULL AFTER schedule_id;
+
+
+

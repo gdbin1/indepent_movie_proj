@@ -171,3 +171,101 @@
   color: #4b5563;
 }
 
+/* ================= People ================= */
+.uRP-people-select {
+  width: 100%;
+  padding: 14px 12px;
+  border-radius: 12px;
+  border: 1px solid #e4e4e2;
+  font-size: 15px;
+}
+
+.uRP-guide-text {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #6f6f6f;
+}
+
+/* ================= People Card ================= */
+.uRP-people-card {
+  background: #f9f9f8;
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid #e4e4e2;
+}
+
+.uRP-people-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.uRP-people-label {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.uRP-people-select {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  font-size: 15px;
+  background: #fff;
+}
+
+/* ================= Guide Box ================= */
+.uRP-guide-box {
+  display: flex;
+  gap: 10px;
+  background: #eef0fb;
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+
+.uRP-guide-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.uRP-guide-text {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #374151;
+}
+
+.uRP-guide-text strong {
+  color: #5c6ac4;
+  font-weight: 600;
+}
+
+.uRP-people-label {
+  white-space: nowrap;
+}
+
+.uRP-people-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.uRP-people-summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.uRP-people-icon {
+  font-size: 20px;
+}
+
+.uRP-people-text {
+  font-size: 15px;
+}
+
+.uRP-people-text strong {
+  font-size: 18px;
+  color: #5c6ac4;
+}

@@ -23,9 +23,10 @@ public class RoomController {
      */
     @GetMapping("/api/rooms/available")
     public List<RoomResponseDto> getAvailableRooms(
-            @RequestParam Long scheduleId,
-            @RequestParam int peopleCount
+            @RequestParam("scheduleId") Long scheduleId,
+            @RequestParam("peopleCount") int peopleCount
     ) {
         return roomService.getAvailableRooms(scheduleId, peopleCount);
     }
+
 }

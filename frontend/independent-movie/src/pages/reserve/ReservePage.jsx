@@ -32,6 +32,7 @@ export default function ReservePage() {
   const [selectedDate, setSelectedDate] = useState(dateList[0].key);
   const [schedules, setSchedules] = useState([]);
   const [selectedScheduleId, setSelectedScheduleId] = useState(null);
+  const [peopleCount, setPeopleCount] = useState(2); // ✅ 인원 선택
   const [loading, setLoading] = useState(false);
 
   /* ================= API ================= */
@@ -100,8 +101,8 @@ export default function ReservePage() {
                 }`}
                 onClick={() => setSelectedDate(date.key)}
               >
-                <span className="uRP-date-day">{date.day}</span>
-                <span className="uRP-date-label">{date.label}</span>
+                <span>{date.day}</span>
+                <span>{date.label}</span>
               </button>
             ))}
           </div>
@@ -109,7 +110,7 @@ export default function ReservePage() {
 
         {/* ================= Schedule ================= */}
         <div className="uRP-section">
-          <h3 className="uRP-section-title">시간표 선택</h3>
+          <h3 className="uRP-section-title">시간 선택</h3>
 
           {loading ? (
             <div className="uRP-empty">상영 일정을 불러오는 중입니다…</div>
@@ -127,15 +128,50 @@ export default function ReservePage() {
                   }`}
                   onClick={() => setSelectedScheduleId(s.scheduleId)}
                 >
-                  <span className="uRP-schedule-theater">{s.roomName}</span>
-                  <span className="uRP-schedule-time">
-                    {s.startTime} ~ {s.endTime}
-                  </span>
+                  <div>{s.startTime} ~ {s.endTime}</div>
                 </button>
               ))}
             </div>
           )}
         </div>
+
+        {/* ================= People ================= */}
+        <div className="uRP-section">
+  <h3 className="uRP-section-title">이용 인원</h3>
+
+  <div className="uRP-people-card">
+    <div className="uRP-people-row">
+      <div className="uRP-people-summary">
+        <span className="uRP-people-icon">👥</span>
+        <span className="uRP-people-text">
+          <strong>{peopleCount}명</strong> 이용
+        </span>
+      </div>
+
+      <select
+        className="uRP-people-select"
+        value={peopleCount}
+        onChange={(e) => setPeopleCount(Number(e.target.value))}
+      >
+        {[1, 2, 3, 4, 5, 6].map((n) => (
+          <option key={n} value={n}>
+            {n}명
+          </option>
+        ))}
+      </select>
+    </div>
+
+    <div className="uRP-guide-box">
+      <span className="uRP-guide-icon">ℹ️</span>
+      <p className="uRP-guide-text">
+        공간 선택 시<br />
+        <strong>{peopleCount}명 이용이 가능한 룸</strong>만 표시됩니다.
+      </p>
+    </div>
+  </div>
+</div>
+
+
 
         {/* ================= CTA ================= */}
         <div className="uRP-footer">
@@ -143,7 +179,9 @@ export default function ReservePage() {
             className="uRP-btn-next"
             disabled={!selectedScheduleId}
             onClick={() =>
-              navigate(`/reserve/seat/${selectedScheduleId}`)
+              navigate(`/reserve/seat/${selectedScheduleId}`, {
+                state: { peopleCount },
+              })
             }
           >
             공간 선택

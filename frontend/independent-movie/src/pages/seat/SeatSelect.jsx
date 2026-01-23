@@ -1,20 +1,25 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import api from "../../api";
 import "./SeatSelect.css";
 
 export default function SeatSelect() {
   const { scheduleId } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // 🔹 ReservePage에서 전달받은 인원
+  const peopleCount = location.state?.peopleCount || 2;
 
   const [schedule, setSchedule] = useState(null);
-  const [peopleCount, setPeopleCount] = useState(2);
   const [rooms, setRooms] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const [showSelectError, setShowSelectError] = useState(false);
+
   /* =========================
-     초기: 시간 슬롯 조회
+     시간 슬롯 조회
   ========================= */
   useEffect(() => {
     if (!scheduleId) return;
@@ -31,12 +36,12 @@ export default function SeatSelect() {
   };
 
   /* =========================
-     인원 변경 → 방 조회
+     인원 기준 방 조회
   ========================= */
   useEffect(() => {
     if (!scheduleId) return;
     fetchAvailableRooms();
-  }, [peopleCount, scheduleId]);
+  }, [scheduleId, peopleCount]);
 
   const fetchAvailableRooms = async () => {
     try {
@@ -61,7 +66,13 @@ export default function SeatSelect() {
   ========================= */
   const handleReserve = async () => {
     if (!selectedRoom) {
-      alert("공간을 선택해주세요.");
+      setShowSelectError(true);
+
+      // 2초 후 자동 해제
+      setTimeout(() => {
+        setShowSelectError(false);
+      }, 2000);
+
       return;
     }
 
@@ -70,9 +81,8 @@ export default function SeatSelect() {
         scheduleId: Number(scheduleId),
         roomId: selectedRoom.roomId,
         peopleCount,
-        userId: 1, // TODO 로그인 연동
+        userId: 1,
       });
-
 
       navigate(`/reserve/complete/${res.data.reservationId}`);
     } catch (e) {
@@ -80,6 +90,7 @@ export default function SeatSelect() {
       console.error(e);
     }
   };
+
 
   if (!schedule) {
     return <div className="uSS-loading">상영 정보를 불러오는 중입니다…</div>;
@@ -93,27 +104,56 @@ export default function SeatSelect() {
         <h2 className="uSS-title">공간 선택</h2>
       </div>
 
-      {/* ===== Schedule Summary ===== */}
+      {/* ===== Summary ===== */}
       <div className="uSS-summary-card">
         <div className="uSS-summary-row">
           <span className="uSS-label">상영 시간</span>
           <span>{schedule.startTime} ~ {schedule.endTime}</span>
         </div>
+
+        <div className="uSS-summary-row">
+          <span className="uSS-label">이용 인원</span>
+          <strong>{peopleCount}명</strong>
+        </div>
       </div>
 
-      {/* ===== People Count ===== */}
-      <div className="uSS-people-card">
-        <label className="uSS-people-label">이용 인원</label>
-        <select
-          className="uSS-people-select"
-          value={peopleCount}
-          onChange={(e) => setPeopleCount(Number(e.target.value))}
-        >
-          {[1, 2, 3, 4, 5, 6].map((n) => (
-            <option key={n} value={n}>{n}명</option>
-          ))}
-        </select>
+
+      {/* ===== Guide ===== */}
+      <div className="uSS-guide-box">
+        ℹ️ <strong>{peopleCount}명 이용이 가능한 공간</strong>만 표시됩니다.
       </div>
+
+      {/* ===== Image Placeholder Section (for future) ===== */}
+      <div className="uSS-image-placeholder">
+        <div className="uSS-image-placeholder-title">
+          {peopleCount}명에게 어울리는 공간
+        </div>
+
+        <div className="uSS-image-placeholder-list">
+          <div className="uSS-image-placeholder-card">
+            이미지가 들어갈 공간
+          </div>
+          <div className="uSS-image-placeholder-card">
+            이미지가 들어갈 공간
+          </div>
+          <div className="uSS-image-placeholder-card">
+            이미지가 들어갈 공간
+          </div>
+          <div className="uSS-image-placeholder-card">
+            이미지가 들어갈 공간
+          </div>
+        </div>
+      </div>
+
+      {/* ===== Room Selection Warning ===== */}
+      {/* ===== Room Selection Error (Triggered) ===== */}
+      {showSelectError && (
+        <div className="uSS-select-warning">
+          ⚠ 공간을 먼저 선택해주세요.
+        </div>
+      )}
+
+
 
       {/* ===== Room List ===== */}
       {loading ? (
@@ -121,7 +161,7 @@ export default function SeatSelect() {
       ) : rooms.length === 0 ? (
         <div className="uSS-empty">선택 가능한 공간이 없습니다.</div>
       ) : (
-        <div className="uSS-room-list">
+        <div className={`uSS-room-list ${showSelectError ? "uSS-room-list-error" : ""}`}>
           {rooms.map((room) => (
             <div
               key={room.roomId}
@@ -150,11 +190,11 @@ export default function SeatSelect() {
         </div>
         <button
           className="uSS-next-btn"
-          disabled={!selectedRoom}
           onClick={handleReserve}
         >
           예약하기
         </button>
+
       </div>
     </div>
   );
