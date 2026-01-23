@@ -174,5 +174,23 @@ ADD COLUMN image_url VARCHAR(255) AFTER DESCRIPTION;
 ALTER TABLE reservation
 ADD COLUMN room_id BIGINT NOT NULL AFTER schedule_id;
 
+DESC schedule;
 
+ALTER TABLE schedule
+ADD COLUMN room_id BIGINT NOT NULL AFTER movie_id;
 
+CREATE INDEX idx_schedule_room_date_time
+ON schedule (room_id, display_date, start_at);
+
+SELECT * FROM schedule;
+DESC room;
+SELECT * FROM room;
+
+DELETE FROM room
+WHERE room_id = 4;
+
+UPDATE movie
+SET runtime_min = 120
+WHERE movie_id = 7;
+
+SELECT * FROM movie;

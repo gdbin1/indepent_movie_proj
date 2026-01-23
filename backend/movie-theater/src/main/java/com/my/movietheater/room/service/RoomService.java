@@ -23,4 +23,15 @@ public class RoomService {
     public List<RoomResponseDto> getAvailableRooms(Long scheduleId, int peopleCount) {
         return roomMapper.selectAvailableRooms(scheduleId, peopleCount);
     }
+
+    /**
+     * USER / ADMIN : 활성화된 방 전체 목록
+     */
+    @Transactional(readOnly = true)
+    public List<RoomResponseDto> getActiveRooms() {
+        return roomMapper.selectAdminRooms()
+                .stream()
+                .filter(room -> room.getIsActive() == 1)
+                .toList();
+    }
 }

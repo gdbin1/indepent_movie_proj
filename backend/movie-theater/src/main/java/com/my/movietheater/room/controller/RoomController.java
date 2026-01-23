@@ -18,7 +18,7 @@ public class RoomController {
     private final RoomService roomService;
 
     /**
-     * SeatSelect 진입용
+     * USER : SeatSelect 진입용
      * scheduleId + peopleCount 기준
      */
     @GetMapping("/api/rooms/available")
@@ -29,4 +29,12 @@ public class RoomController {
         return roomService.getAvailableRooms(scheduleId, peopleCount);
     }
 
+    /**
+     * USER / ADMIN : 활성화된 방 전체 목록
+     * (스케줄 생성, 방 선택용)
+     */
+    @GetMapping("/api/rooms")
+    public List<RoomResponseDto> getActiveRooms() {
+        return roomService.getActiveRooms();
+    }
 }

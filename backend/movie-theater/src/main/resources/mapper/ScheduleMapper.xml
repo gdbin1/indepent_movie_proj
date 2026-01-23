@@ -27,31 +27,6 @@
 
 
   <!-- =========================
-       ADMIN : 상영 시간 슬롯 등록
-  ========================= -->
-  <insert id="insertSchedule"
-          parameterType="com.my.movietheater.schedule.dto.ScheduleCreateRequestDto"
-          useGeneratedKeys="true"
-          keyProperty="scheduleId">
-
-    INSERT INTO schedule (
-      movie_id,
-      display_date,
-      start_at,
-      end_at,
-      status
-    ) VALUES (
-      #{movieId},
-      #{displayDate},
-      #{startAt},
-      #{endAt},
-      #{status}
-    )
-
-  </insert>
-
-
-  <!-- =========================
        USER : 시간 슬롯 단건 조회
        (SeatSelect 진입용)
   ========================= -->
@@ -69,5 +44,73 @@
       AND s.status = 'OPEN'
 
   </select>
+
+
+  <!-- =========================
+       ADMIN : 중복 체크
+       (같은 방 + 같은 시작 시간)
+  ========================= -->
+  <select id="existsByRoomAndStartAt" resultType="int">
+    SELECT COUNT(*)
+    FROM schedule
+    WHERE room_id = #{roomId}
+      AND start_at = #{startAt}
+  </select>
+
+
+  <!-- =========================
+       ADMIN : 스케줄 생성
+  ========================= -->
+  <insert id="insertAdminSchedule">
+    INSERT INTO schedule (
+      movie_id,
+      room_id,
+      start_at,
+      end_at,
+      display_date,
+      status
+    ) VALUES (
+      #{movieId},
+      #{roomId},
+      #{startAt},
+      #{endAt},
+      #{displayDate},
+      'OPEN'
+    )
+  </insert>
+
+
+  <!-- =========================
+       ADMIN : 날짜별 스케줄 조회 (관리용)
+  ========================= -->
+  <select id="selectAdminSchedulesByDate"
+          resultType="com.my.movietheater.schedule.dto.AdminScheduleResponseDto">
+
+    SELECT
+      s.schedule_id        AS scheduleId,
+      s.movie_id           AS movieId,
+      m.title              AS movieTitle,
+      s.room_id            AS roomId,
+      r.room_name          AS roomName,
+      DATE_FORMAT(s.start_at, '%H:%i') AS startTime,
+      DATE_FORMAT(s.end_at, '%H:%i')   AS endTime,
+      s.status             AS status
+    FROM schedule s
+    JOIN movie m ON s.movie_id = m.movie_id
+    JOIN room  r ON s.room_id  = r.room_id
+    WHERE s.display_date = #{displayDate}
+    ORDER BY s.start_at ASC
+
+  </select>
+
+
+  <!-- =========================
+       ADMIN : 스케줄 상태 변경
+  ========================= -->
+  <update id="updateScheduleStatus">
+    UPDATE schedule
+    SET status = #{status}
+    WHERE schedule_id = #{scheduleId}
+  </update>
 
 </mapper>

@@ -1,0 +1,123 @@
+.aRP-page {
+  padding: 32px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.aRP-title {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+/* Form */
+.aRP-form {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr) auto;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.aRP-input {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.aRP-input-wide {
+  grid-column: span 3;
+}
+
+.aRP-btn {
+  padding: 10px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  background: #eee;
+}
+
+.aRP-btn.primary {
+  background: #5c6ac4;
+  color: #fff;
+}
+
+.aRP-btn.danger {
+  background: #e5533d;
+  color: #fff;
+}
+
+/* List */
+.aRP-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.aRP-empty {
+  color: #888;
+  font-size: 14px;
+}
+
+/* Card */
+.aRP-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 16px 20px;
+  background: #fff;
+}
+
+.aRP-card.inactive {
+  opacity: 0.5;
+}
+
+.aRP-card-info h3 {
+  margin: 0 0 6px;
+  font-size: 18px;
+}
+
+.aRP-code {
+  font-size: 13px;
+  color: #666;
+  font-weight: 500;
+}
+
+.aRP-card-info p {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.aRP-sub {
+  margin-top: 6px;
+  color: #777;
+  font-size: 13px;
+}
+
+.aRP-status {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+
+.aRP-status.active {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.aRP-status.inactive {
+  background: #fdecea;
+  color: #c62828;
+}
+
+/* Actions */
+.aRP-card-actions {
+  display: flex;
+  gap: 8px;
+}

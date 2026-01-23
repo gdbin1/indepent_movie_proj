@@ -31,6 +31,11 @@ public interface MovieMapper {
     );
 
     /**
+     * ✅ ADMIN - 영화 수정 (runtime / description / poster / grade)
+     */
+    int updateMovieForAdmin(MovieDto movie);
+
+    /**
      * ✅ ADMIN - 영화 삭제 (BASIC만 가능, PREMIUM은 Service에서 차단)
      */
     int deleteMovie(@Param("movieId") Long movieId);
@@ -51,4 +56,9 @@ public interface MovieMapper {
      * USER - 영화 상세 조회
      */
     MovieDto selectMovieById(Long movieId);
+
+    /**
+     * 러닝타임 조회 (Schedule 검증용)
+     */
+    int selectRuntimeMinByMovieId(Long movieId);
 }

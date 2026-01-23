@@ -19,6 +19,10 @@ public class MovieService {
 
     private final MovieMapper movieMapper;
 
+    /* ==================================================
+     * USER
+     * ================================================== */
+
     /**
      * USER - 현재 상영 중 영화 전체 조회
      * is_active = 1
@@ -30,8 +34,6 @@ public class MovieService {
 
     /**
      * USER - 현재 상영 중 영화 (등급별)
-     * is_active = 1
-     * price_grade = BASIC / PREMIUM
      */
     @Transactional(readOnly = true)
     public List<MovieDto> getActiveMoviesByGrade(String priceGrade) {
@@ -46,11 +48,14 @@ public class MovieService {
         return movieMapper.selectMovieById(movieId);
     }
 
+    /* ==================================================
+     * KOBIS
+     * ================================================== */
+
     /**
      * KOBIS 박스오피스 → movie 테이블 저장
-     * - ADMIN 전용
-     * - price_grade = PREMIUM
-     * - 최초 저장 시 is_active = 1
+     * - PREMIUM
+     * - 최초 저장 시 DRAFT 상태 (is_active = 0)
      */
     @Transactional
     public void saveMoviesFromBoxOffice(List<WeeklyBoxOfficeDto> boxOfficeList) {
@@ -67,7 +72,7 @@ public class MovieService {
             movie.setRuntimeMin(0);
             movie.setPosterUrl(null);
             movie.setPriceGrade("PREMIUM");
-            movie.setIsActive(1);
+            movie.setIsActive(0); // ⭐ DRAFT 상태
 
             int exists = movieMapper.existsByMovieCd(dto.getMovieCd());
 
@@ -79,11 +84,19 @@ public class MovieService {
         }
     }
 
+    /* ==================================================
+     * ADMIN
+     * ================================================== */
+
     /**
      * ADMIN - 수동 영화 등록 (BASIC)
      */
     @Transactional
     public void createBasicMovie(AdminMovieCreateRequest request) {
+
+        if (request.getRuntimeMin() == null || request.getRuntimeMin() <= 0) {
+            throw new IllegalArgumentException("러닝타임은 필수입니다.");
+        }
 
         MovieDto movie = new MovieDto();
         movie.setSource("ADMIN");
@@ -112,14 +125,46 @@ public class MovieService {
      */
     @Transactional
     public void updateMovieActive(Long movieId, boolean isActive) {
-        int activeValue = isActive ? 1 : 0;
-        movieMapper.updateMovieActive(movieId, activeValue);
+
+        MovieDto movie = movieMapper.selectMovieById(movieId);
+        if (movie == null) {
+            throw new IllegalArgumentException("존재하지 않는 영화입니다.");
+        }
+
+        // ⭐ 상영 시작 시 러닝타임 검증
+        if (isActive && (movie.getRuntimeMin() == null || movie.getRuntimeMin() <= 0)) {
+            throw new IllegalStateException("러닝타임이 없는 영화는 상영할 수 없습니다.");
+        }
+
+        movieMapper.updateMovieActive(movieId, isActive ? 1 : 0);
     }
 
     /**
-     * ✅ ADMIN - 영화 삭제
+     * ✅ ADMIN - 영화 수정 (핵심)
+     */
+    @Transactional
+    public void updateMovieForAdmin(MovieDto request) {
+
+        if (request.getMovieId() == null) {
+            throw new IllegalArgumentException("movieId는 필수입니다.");
+        }
+
+        if (request.getRuntimeMin() == null || request.getRuntimeMin() <= 0) {
+            throw new IllegalArgumentException("러닝타임은 1분 이상이어야 합니다.");
+        }
+
+        MovieDto origin = movieMapper.selectMovieById(request.getMovieId());
+        if (origin == null) {
+            throw new IllegalArgumentException("존재하지 않는 영화입니다.");
+        }
+
+        movieMapper.updateMovieForAdmin(request);
+    }
+
+    /**
+     * ADMIN - 영화 삭제
      * - BASIC : 삭제 가능
-     * - PREMIUM : 삭제 불가 (박스오피스 데이터 보호)
+     * - PREMIUM : 삭제 불가
      */
     @Transactional
     public void deleteMovie(Long movieId) {

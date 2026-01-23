@@ -8,6 +8,7 @@ import com.my.movietheater.kobis.dto.WeeklyBoxOfficeDto;
 import com.my.movietheater.kobis.service.KobisService;
 import com.my.movietheater.movie.dto.AdminMovieCreateRequest;
 import com.my.movietheater.movie.dto.AdminMovieDto;
+import com.my.movietheater.movie.dto.MovieDto;
 import com.my.movietheater.movie.service.MovieService;
 
 import lombok.RequiredArgsConstructor;
@@ -17,57 +18,80 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AdminMovieController {
 
-	private final KobisService kobisService;
-	private final MovieService movieService;
+    private final KobisService kobisService;
+    private final MovieService movieService;
 
-	/**
-	 * KOBIS 박스오피스 영화 저장 (PREMIUM) POST /api/admin/movie/boxoffice
-	 */
-	@PostMapping("/boxoffice")
-	public String saveBoxOfficeToMovieTable(@RequestParam("targetDt") String targetDt) {
+    /**
+     * KOBIS 박스오피스 영화 저장 (PREMIUM)
+     * POST /api/admin/movie/boxoffice
+     */
+    @PostMapping("/boxoffice")
+    public String saveBoxOfficeToMovieTable(@RequestParam("targetDt") String targetDt) {
 
-		List<WeeklyBoxOfficeDto> boxOfficeList = kobisService.getWeeklyBoxOfficeList(targetDt);
+        List<WeeklyBoxOfficeDto> boxOfficeList =
+                kobisService.getWeeklyBoxOfficeList(targetDt);
 
-		movieService.saveMoviesFromBoxOffice(boxOfficeList);
+        movieService.saveMoviesFromBoxOffice(boxOfficeList);
 
-		return "KOBIS 박스오피스 → movie 테이블 저장 완료";
-	}
+        return "KOBIS 박스오피스 → movie 테이블 저장 완료";
+    }
 
-	/**
-	 * ADMIN 수동 영화 등록 (BASIC) POST /api/admin/movie
-	 */
-	@PostMapping
-	public String createMovie(@RequestBody AdminMovieCreateRequest request) {
-		movieService.createBasicMovie(request);
-		return "ADMIN 영화(BASIC) 등록 완료";
-	}
+    /**
+     * ADMIN 수동 영화 등록 (BASIC)
+     * POST /api/admin/movie
+     */
+    @PostMapping
+    public String createMovie(@RequestBody AdminMovieCreateRequest request) {
+        movieService.createBasicMovie(request);
+        return "ADMIN 영화(BASIC) 등록 완료";
+    }
 
-	/**
-	 * ADMIN - movie 전체 목록 조회 GET /api/admin/movie
-	 */
-	@GetMapping
-	public List<AdminMovieDto> getAllMovies() {
-		return movieService.getAllMoviesForAdmin();
-	}
+    /**
+     * ADMIN - movie 전체 목록 조회
+     * GET /api/admin/movie
+     */
+    @GetMapping
+    public List<AdminMovieDto> getAllMovies() {
+        return movieService.getAllMoviesForAdmin();
+    }
 
-	/**
-	 * ADMIN - 상영(노출) 여부 토글 PATCH
-	 * /api/admin/movie/{movieId}/active?isActive=true|false
-	 */
-	@PatchMapping("/{movieId}/active")
-	public String updateActive(@PathVariable("movieId") Long movieId, @RequestParam("isActive") boolean isActive) {
-		movieService.updateMovieActive(movieId, isActive);
-		return isActive ? "상영(노출) ON" : "상영(노출) OFF";
-	}
+    /**
+     * ADMIN - 상영(노출) 여부 토글
+     * PATCH /api/admin/movie/{movieId}/active?isActive=true|false
+     */
+    @PatchMapping("/{movieId}/active")
+    public String updateActive(
+            @PathVariable("movieId") Long movieId,
+            @RequestParam("isActive") boolean isActive
+    ) {
+        movieService.updateMovieActive(movieId, isActive);
+        return isActive ? "상영(노출) ON" : "상영(노출) OFF";
+    }
 
-	/**
-	 * ✅ ADMIN - 영화 삭제 DELETE /api/admin/movie/{movieId}
-	 *
-	 * - BASIC : 삭제 가능 - PREMIUM: 삭제 불가 (Service에서 차단)
-	 */
-	@DeleteMapping("/{movieId}")
-	public String deleteMovie(@PathVariable("movieId") Long movieId) {
-		movieService.deleteMovie(movieId);
-		return "영화 삭제 완료";
-	}
+    /**
+     * ✅ ADMIN - 영화 수정 (핵심)
+     * PUT /api/admin/movie/{movieId}
+     */
+    @PutMapping("/{movieId}")
+    public String updateMovie(
+            @PathVariable("movieId") Long movieId,
+            @RequestBody MovieDto request
+    ) {
+        request.setMovieId(movieId);
+        movieService.updateMovieForAdmin(request);
+        return "영화 정보 수정 완료";
+    }
+
+    /**
+     * ADMIN - 영화 삭제
+     * DELETE /api/admin/movie/{movieId}
+     *
+     * - BASIC : 삭제 가능
+     * - PREMIUM : 삭제 불가 (Service에서 차단)
+     */
+    @DeleteMapping("/{movieId}")
+    public String deleteMovie(@PathVariable("movieId") Long movieId) {
+        movieService.deleteMovie(movieId);
+        return "영화 삭제 완료";
+    }
 }

@@ -37,4 +37,71 @@
 
   </select>
 
+
+  <!-- =========================
+       ADMIN : 방 등록
+  ========================= -->
+  <insert id="insertAdminRoom"
+        parameterType="com.my.movietheater.room.dto.AdminRoomCreateRequestDto">
+
+    INSERT INTO room (
+      room_code,
+      room_name,
+      room_type,
+      theme,
+      description,
+      image_url,
+      capacity_min,
+      capacity_max,
+      base_price,
+      is_active
+    ) VALUES (
+      #{roomCode},
+      #{roomName},
+      #{roomType},
+      #{theme},
+      #{description},
+      #{imageUrl},
+      #{capacityMin},
+      #{capacityMax},
+      #{basePrice},
+      1
+    )
+</insert>
+
+
+
+  <!-- =========================
+       ADMIN : 방 목록 조회 (관리 화면용)
+  ========================= -->
+  <select id="selectAdminRooms"
+          resultType="com.my.movietheater.room.dto.RoomResponseDto">
+
+    SELECT
+      r.room_id       AS roomId,
+      r.room_code     AS roomCode,
+      r.room_name     AS roomName,
+      r.room_type     AS roomType,
+      r.theme         AS theme,
+      r.description   AS description,
+      r.image_url     AS imageUrl,
+      r.capacity_min  AS capacityMin,
+      r.capacity_max  AS capacityMax,
+      r.base_price    AS basePrice,
+      r.is_active     AS isActive
+    FROM room r
+    ORDER BY r.created_at DESC
+
+  </select>
+
+
+  <!-- =========================
+       ADMIN : 방 활성/비활성 처리
+  ========================= -->
+  <update id="updateRoomActive">
+    UPDATE room
+    SET is_active = #{isActive}
+    WHERE room_id = #{roomId}
+  </update>
+
 </mapper>

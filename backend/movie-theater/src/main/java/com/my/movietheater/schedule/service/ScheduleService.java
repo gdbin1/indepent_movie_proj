@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.my.movietheater.schedule.dto.ScheduleCreateRequestDto;
 import com.my.movietheater.schedule.dto.ScheduleResponseDto;
 import com.my.movietheater.schedule.mapper.ScheduleMapper;
 
@@ -26,21 +25,10 @@ public class ScheduleService {
     }
 
     /**
-     * ADMIN : 상영 일정 등록
+     * USER : 상영 일정 단건 조회 (SeatSelect 진입용)
      */
-    @Transactional
-    public void createSchedule(ScheduleCreateRequestDto dto) {
-        // 기본 상태 세팅
-        if (dto.getStatus() == null || dto.getStatus().isBlank()) {
-            dto.setStatus("OPEN");
-        }
-
-        scheduleMapper.insertSchedule(dto);
-    }
-    
     @Transactional(readOnly = true)
     public ScheduleResponseDto getScheduleDetail(Long scheduleId) {
         return scheduleMapper.selectScheduleById(scheduleId);
     }
-
 }
