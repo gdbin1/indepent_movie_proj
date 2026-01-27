@@ -81,3 +81,48 @@
   margin-top: 8px;
   font-weight: 600;
 }
+
+/* =========================
+   Card Footer
+========================= */
+.uMP-card-footer {
+  margin-top: 12px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* =========================
+   Cancel Button
+========================= */
+.uMP-cancel-btn {
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #e04b4b;
+  background: #fff;
+  color: #e04b4b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.uMP-cancel-btn:hover {
+  background: #e04b4b;
+  color: #fff;
+}
+
+/* =========================
+   Cancelled Card
+========================= */
+.uMP-cancelled {
+  opacity: 0.6;
+}
+
+.uMP-status.uMP-reserved {
+  color: #2f6df6;
+  font-weight: 600;
+}
+
+.uMP-status.uMP-cancelled {
+  color: #999;
+  font-weight: 600;
+}

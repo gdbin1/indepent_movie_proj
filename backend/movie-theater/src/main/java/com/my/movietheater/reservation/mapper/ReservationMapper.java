@@ -34,5 +34,12 @@ public interface ReservationMapper {
     /**
      * 예약 취소
      */
-    int cancelReservation(@Param("reservationId") Long reservationId);
+    /**
+     * 예약 취소 (본인 예약만)
+     */
+    int cancelReservation(
+        @Param("reservationId") Long reservationId,
+        @Param("userId") Long userId
+    );
+
 }

@@ -6,8 +6,12 @@ export default function MyPage() {
     const [reservations, setReservations] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // 임시: 로그인 userId
-    const userId = localStorage.getItem("userId") || 1;
+    const userId = localStorage.getItem("userId");
+
+    const visibleReservations = reservations.filter(
+        (r) => r.status === "RESERVED"
+    );
+
 
     useEffect(() => {
         fetchReservations();
@@ -18,13 +22,39 @@ export default function MyPage() {
             const res = await api.get("/mypage/reservations", {
                 params: { userId },
             });
-            setReservations(res.data);
+            setReservations(res.data || []);
         } catch (e) {
             console.error("마이페이지 예약 조회 실패", e);
         } finally {
             setLoading(false);
         }
     };
+
+    /* =========================
+       예약 취소
+    ========================= */
+    const handleCancel = async (reservationId) => {
+        const ok = window.confirm("예약을 취소하시겠습니까?");
+        if (!ok) return;
+
+        try {
+            await api.patch(
+                `/reservations/${reservationId}/cancel`,
+                null,
+                { params: { userId } }
+            );
+
+            // 🔥 즉시 리스트에서 제거
+            setReservations((prev) =>
+                prev.filter((r) => r.reservationId !== reservationId)
+            );
+        } catch (e) {
+            alert("예약 취소 중 오류가 발생했습니다.");
+            console.error(e);
+        }
+    };
+
+
 
     if (loading) {
         return <div className="uMP-loading">불러오는 중...</div>;
@@ -37,12 +67,12 @@ export default function MyPage() {
             <section className="uMP-section">
                 <h2 className="uMP-section-title">내 예약 내역</h2>
 
-                {reservations.length === 0 && (
+                {visibleReservations.length === 0 && (
                     <div className="uMP-empty">예약 내역이 없습니다.</div>
                 )}
 
                 <ul className="uMP-list">
-                    {reservations.map((r) => (
+                    {visibleReservations.map((r) => (
                         <li
                             key={r.reservationId}
                             className={`uMP-card ${r.status === "CANCELLED" ? "uMP-cancelled" : ""
@@ -58,8 +88,7 @@ export default function MyPage() {
                             <div className="uMP-card-body">
                                 <div>상영일: {r.displayDate}</div>
                                 <div>
-                                    시간: {r.startAt.slice(11, 16)} ~{" "}
-                                    {r.endAt.slice(11, 16)}
+                                    시간: {r.startAt.slice(11, 16)} ~ {r.endAt.slice(11, 16)}
                                 </div>
                                 <div>룸: {r.roomName}</div>
                                 <div>인원: {r.peopleCount}명</div>
@@ -67,6 +96,18 @@ export default function MyPage() {
                                     결제 금액: {r.priceTotal.toLocaleString()}원
                                 </div>
                             </div>
+
+                            {/* ===== Footer / Action ===== */}
+                            {r.status === "RESERVED" && (
+                                <div className="uMP-card-footer">
+                                    <button
+                                        className="uMP-cancel-btn"
+                                        onClick={() => handleCancel(r.reservationId)}
+                                    >
+                                        예약 취소
+                                    </button>
+                                </div>
+                            )}
                         </li>
                     ))}
                 </ul>
