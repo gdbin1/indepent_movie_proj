@@ -1,0 +1,247 @@
+/* =========================
+   Admin User Manage Page
+   Prefix: aUM-
+========================= */
+
+.aUM-page {
+  min-height: 100vh;
+  padding: 40px 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.aUM-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.aUM-title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+}
+
+.aUM-sub {
+  margin: 8px 0 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.aUM-toolbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 18px 0 14px;
+  flex-wrap: wrap;
+}
+
+.aUM-toolbar-left {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.aUM-toolbar-right {
+  display: flex;
+  align-items: flex-end;
+}
+
+.aUM-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.aUM-label {
+  font-size: 12px;
+  color: #666;
+}
+
+.aUM-input,
+.aUM-select {
+  height: 38px;
+  padding: 0 12px;
+  border: 1px solid #e3e3e3;
+  border-radius: 10px;
+  background: #fff;
+  outline: none;
+}
+
+.aUM-input {
+  width: 280px;
+}
+
+.aUM-select {
+  width: 160px;
+}
+
+.aUM-select--inline {
+  width: 140px;
+}
+
+.aUM-input:focus,
+.aUM-select:focus {
+  border-color: #b9b9ff;
+  box-shadow: 0 0 0 3px rgba(92, 106, 196, 0.12);
+}
+
+.aUM-count {
+  font-size: 14px;
+  color: #333;
+  padding: 6px 10px;
+  border: 1px solid #e7e7e7;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.aUM-card {
+  background: #fff;
+  border: 1px solid #ececec;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.aUM-empty {
+  padding: 40px 18px;
+  text-align: center;
+  color: #666;
+}
+
+.aUM-table-wrap {
+  overflow: auto;
+}
+
+.aUM-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  min-width: 980px;
+}
+
+.aUM-th,
+.aUM-td {
+  padding: 12px 12px;
+  border-bottom: 1px solid #f0f0f0;
+  text-align: left;
+  font-size: 14px;
+}
+
+.aUM-th {
+  position: sticky;
+  top: 0;
+  background: #fafafa;
+  z-index: 1;
+  font-weight: 700;
+  color: #333;
+}
+
+.aUM-th--id {
+  width: 72px;
+}
+
+.aUM-th--role {
+  width: 120px;
+}
+
+.aUM-th--change {
+  width: 220px;
+}
+
+.aUM-th--btn {
+  width: 120px;
+}
+
+.aUM-th--date {
+  width: 190px;
+}
+
+.aUM-tr:hover .aUM-td {
+  background: #fcfcff;
+}
+
+.aUM-td--mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+  font-size: 13px;
+}
+
+.aUM-badge {
+  display: inline-flex;
+  align-items: center;
+  height: 26px;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  border: 1px solid #e7e7e7;
+}
+
+.aUM-badge--admin {
+  background: #fff3f3;
+  border-color: #ffd7d7;
+  color: #b00020;
+}
+
+.aUM-badge--user {
+  background: #f5f6ff;
+  border-color: #dfe3ff;
+  color: #2b3a9a;
+}
+
+.aUM-changed {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #b00020;
+}
+
+.aUM-btn {
+  height: 38px;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1px solid #e3e3e3;
+  background: #fff;
+  cursor: pointer;
+}
+
+.aUM-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.aUM-btn--primary {
+  border-color: #5c6ac4;
+  background: #5c6ac4;
+  color: #fff;
+  font-weight: 800;
+}
+
+.aUM-btn--ghost {
+  background: #fff;
+}
+
+.aUM-footnote {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border: 1px dashed #e1e1e1;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.aUM-note-title {
+  font-size: 13px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.aUM-note-list {
+  margin: 0;
+  padding-left: 18px;
+  color: #666;
+  font-size: 13px;
+}

@@ -6,6 +6,8 @@ export default function UserLayout() {
   const role = localStorage.getItem("role");
   const userName = localStorage.getItem("userName");
 
+
+
   const handleLogout = () => {
     localStorage.clear();
     navigate("/", { replace: true });
@@ -54,9 +56,15 @@ export default function UserLayout() {
               <>
                 <span className="user-name">{userName}님</span>
 
-                <button className="btn-text" onClick={() => navigate("/mypage")}>
-                  마이 페이지
-                </button>
+                {role !== "ADMIN" && (
+                  <button
+                    className="btn-text"
+                    onClick={() => navigate("/mypage")}
+                  >
+                    마이 페이지
+                  </button>
+                )}
+
 
                 {/* 🔥 ADMIN 전용 버튼 */}
                 {role === "ADMIN" && (

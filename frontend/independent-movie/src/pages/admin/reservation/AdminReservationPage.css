@@ -92,3 +92,107 @@
   cursor: not-allowed;
 }
 
+/* =========================
+   예약 상세 모달
+========================= */
+
+/* 배경 오버레이 */
+.aRP-modal-bg {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+/* 모달 박스 */
+.aRP-modal {
+  background: #ffffff;
+  width: 520px;
+  max-width: calc(100% - 32px);
+  border-radius: 12px;
+  padding: 24px 24px 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+  animation: aRP-modal-fade 0.15s ease-out;
+}
+
+@keyframes aRP-modal-fade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.aRP-modal h2 {
+  margin: 0 0 16px;
+  font-size: 20px;
+  font-weight: 700;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 12px;
+}
+
+/* 섹션 */
+.aRP-modal-section {
+  margin-bottom: 16px;
+}
+
+.aRP-modal-section p {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 6px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.aRP-modal-section b {
+  color: #666;
+  font-weight: 500;
+  min-width: 90px;
+}
+
+/* 버튼 영역 */
+.aRP-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.aRP-modal-actions button {
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+}
+
+.aRP-modal-actions button:hover {
+  background: #f4f4f4;
+}
+
+.aRP-modal-actions .cancel-btn {
+  background: #e53935;
+  color: #fff;
+  border: none;
+}
+
+.aRP-modal-actions .cancel-btn:hover {
+  background: #d32f2f;
+}
+
+/* 테이블 행 클릭 UX */
+.aRP-table tr.clickable {
+  cursor: pointer;
+}
+
+.aRP-table tr.clickable:hover {
+  background: #fafafa;
+}

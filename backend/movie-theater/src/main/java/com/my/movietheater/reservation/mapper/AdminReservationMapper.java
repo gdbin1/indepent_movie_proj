@@ -11,22 +11,20 @@ import com.my.movietheater.reservation.dto.AdminReservationListDto;
 public interface AdminReservationMapper {
 
     List<AdminReservationListDto> selectAdminReservationList(
-            @Param("status") String status,           // null 가능
-            @Param("keyword") String keyword,         // null/"" 가능 (예약번호/이메일/이름/전화)
-            @Param("dateFrom") String dateFrom,       // "YYYY-MM-DD" (null 가능)
-            @Param("dateTo") String dateTo,           // "YYYY-MM-DD" (null 가능)
+            @Param("date") String date,
+            @Param("status") String status,
+            @Param("keyword") String keyword,
             @Param("limit") int limit,
             @Param("offset") int offset
     );
 
     int countAdminReservationList(
+            @Param("date") String date,
             @Param("status") String status,
-            @Param("keyword") String keyword,
-            @Param("dateFrom") String dateFrom,
-            @Param("dateTo") String dateTo
+            @Param("keyword") String keyword
     );
-    
-	String selectReservationStatusById(@Param("reservationId") Long reservationId);
 
-	int cancelReservationByAdmin(@Param("reservationId") Long reservationId);
+    String selectReservationStatusById(@Param("reservationId") Long reservationId);
+
+    int cancelReservationByAdmin(@Param("reservationId") Long reservationId);
 }

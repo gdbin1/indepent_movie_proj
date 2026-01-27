@@ -20,64 +20,65 @@ public class AdminReservationService {
     private final AdminReservationMapper adminReservationMapper;
 
     public Map<String, Object> getAdminReservationList(
+            String date,
             String status,
             String keyword,
-            String dateFrom,
-            String dateTo,
             int page,
             int size
     ) {
+        if (!StringUtils.hasText(date)) {
+            throw new IllegalArgumentException("date는 필수입니다.");
+        }
+
         int safePage = Math.max(page, 1);
-        int safeSize = Math.min(Math.max(size, 1), 100); // 최대 100 제한
+        int safeSize = 10;
         int offset = (safePage - 1) * safeSize;
 
-        String safeStatus = StringUtils.hasText(status) ? status : null;
-        String safeKeyword = StringUtils.hasText(keyword) ? keyword.trim() : null;
-        String safeDateFrom = StringUtils.hasText(dateFrom) ? dateFrom : null;
-        String safeDateTo = StringUtils.hasText(dateTo) ? dateTo : null;
+        String safeStatus =
+                (StringUtils.hasText(status) && !"ALL".equalsIgnoreCase(status))
+                        ? status
+                        : null;
 
-        List<AdminReservationListDto> list = adminReservationMapper.selectAdminReservationList(
-                safeStatus, safeKeyword, safeDateFrom, safeDateTo, safeSize, offset
-        );
-        int total = adminReservationMapper.countAdminReservationList(
-                safeStatus, safeKeyword, safeDateFrom, safeDateTo
-        );
+        String safeKeyword =
+                StringUtils.hasText(keyword) ? keyword.trim() : null;
+
+        List<AdminReservationListDto> list =
+                adminReservationMapper.selectAdminReservationList(
+                        date, safeStatus, safeKeyword, safeSize, offset
+                );
+
+        int total =
+                adminReservationMapper.countAdminReservationList(
+                        date, safeStatus, safeKeyword
+                );
 
         Map<String, Object> result = new HashMap<>();
         result.put("list", list);
         result.put("page", safePage);
         result.put("size", safeSize);
-        result.put("total", total);
-        result.put("totalPages", (int) Math.ceil((double) total / safeSize));
+        result.put("totalCount", total);
+        result.put("totalPage", (int) Math.ceil((double) total / safeSize));
+
         return result;
     }
-    
- // Step 2: ADMIN 강제 취소
-    // =========================
+
     @Transactional
     public Map<String, Object> cancelByAdmin(Long reservationId) {
-        if (reservationId == null) {
-            throw new IllegalArgumentException("reservationId는 필수입니다.");
-        }
+        String status =
+                adminReservationMapper.selectReservationStatusById(reservationId);
 
-        String status = adminReservationMapper.selectReservationStatusById(reservationId);
         if (status == null) {
-            throw new IllegalArgumentException("존재하지 않는 예약입니다. reservationId=" + reservationId);
+            throw new IllegalArgumentException("존재하지 않는 예약입니다.");
         }
         if ("CANCELLED".equalsIgnoreCase(status)) {
             throw new IllegalStateException("이미 취소된 예약입니다.");
         }
 
-        int updated = adminReservationMapper.cancelReservationByAdmin(reservationId);
-        if (updated == 0) {
-            // 동시성 등으로 이미 취소된 경우
-            throw new IllegalStateException("예약 취소에 실패했습니다. (이미 취소되었을 수 있음)");
-        }
+        adminReservationMapper.cancelReservationByAdmin(reservationId);
 
         Map<String, Object> result = new HashMap<>();
         result.put("reservationId", reservationId);
         result.put("status", "CANCELLED");
-        result.put("message", "ADMIN 강제 취소 완료");
         return result;
     }
 }

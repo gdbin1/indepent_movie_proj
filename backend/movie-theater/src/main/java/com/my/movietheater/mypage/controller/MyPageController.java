@@ -1,4 +1,3 @@
-// src/main/java/com/my/movietheater/mypage/controller/MyPageController.java
 package com.my.movietheater.mypage.controller;
 
 import java.util.List;
