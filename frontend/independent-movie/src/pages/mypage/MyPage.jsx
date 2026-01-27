@@ -8,6 +8,11 @@ export default function MyPage() {
 
     const userId = localStorage.getItem("userId");
 
+    const visibleReservations = reservations.filter(
+        (r) => r.status === "RESERVED"
+    );
+
+
     useEffect(() => {
         fetchReservations();
     }, []);
@@ -38,12 +43,17 @@ export default function MyPage() {
                 null,
                 { params: { userId } }
             );
-            fetchReservations(); // 취소 후 재조회
+
+            // 🔥 즉시 리스트에서 제거
+            setReservations((prev) =>
+                prev.filter((r) => r.reservationId !== reservationId)
+            );
         } catch (e) {
             alert("예약 취소 중 오류가 발생했습니다.");
             console.error(e);
         }
     };
+
 
 
     if (loading) {
@@ -57,12 +67,12 @@ export default function MyPage() {
             <section className="uMP-section">
                 <h2 className="uMP-section-title">내 예약 내역</h2>
 
-                {reservations.length === 0 && (
+                {visibleReservations.length === 0 && (
                     <div className="uMP-empty">예약 내역이 없습니다.</div>
                 )}
 
                 <ul className="uMP-list">
-                    {reservations.map((r) => (
+                    {visibleReservations.map((r) => (
                         <li
                             key={r.reservationId}
                             className={`uMP-card ${r.status === "CANCELLED" ? "uMP-cancelled" : ""
