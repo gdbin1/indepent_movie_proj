@@ -68,12 +68,14 @@
 
     <!-- 예약 취소 -->
     <update id="cancelReservation">
-        UPDATE reservation
-        SET
-            status = 'CANCELLED',
-            canceled_at = NOW()
-        WHERE reservation_id = #{reservationId}
-          AND status = 'RESERVED'
-    </update>
+    UPDATE reservation
+    SET
+        status = 'CANCELLED',
+        canceled_at = NOW()
+    WHERE reservation_id = #{reservationId}
+      AND user_id = #{userId}
+      AND status = 'RESERVED'
+</update>
+
 
 </mapper>

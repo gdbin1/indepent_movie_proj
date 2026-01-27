@@ -73,12 +73,14 @@ public class ReservationService {
      * 예약 취소
      */
     @Transactional
-    public void cancelReservation(Long reservationId) {
-        int updated = reservationMapper.cancelReservation(reservationId);
+    public void cancelReservation(Long reservationId, Long loginUserId) {
+        int updated = reservationMapper.cancelReservation(reservationId, loginUserId);
+
         if (updated == 0) {
-            throw new IllegalStateException("이미 취소되었거나 존재하지 않는 예약입니다.");
+            throw new IllegalStateException("예약 취소에 실패했습니다.");
         }
     }
+
 
     private String generateReservationNo() {
         String date = LocalDate.now()
