@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.my.movietheater.reservation.mapper.AdminReservationMapper">
+
+  <sql id="adminReservationJoinFrom">
+    FROM reservation r
+    LEFT JOIN users u    ON u.user_id = r.user_id
+    LEFT JOIN room rm    ON rm.room_id = r.room_id
+    LEFT JOIN schedule s ON s.schedule_id = r.schedule_id
+  </sql>
+
+  <sql id="adminReservationWhere">
+    WHERE 1=1
+    <if test="status != null and status != ''">
+      AND r.status = #{status}
+    </if>
+
+    <if test="keyword != null and keyword != ''">
+      AND (
+        r.reservation_no LIKE CONCAT('%', #{keyword}, '%')
+        OR u.email LIKE CONCAT('%', #{keyword}, '%')
+        OR u.name LIKE CONCAT('%', #{keyword}, '%')
+        OR u.phone LIKE CONCAT('%', #{keyword}, '%')
+      )
+    </if>
+
+    <if test="dateFrom != null and dateFrom != ''">
+      AND s.display_date <![CDATA[>=]]> #{dateFrom}
+    </if>
+    <if test="dateTo != null and dateTo != ''">
+      AND s.display_date <![CDATA[<=]]> #{dateTo}
+    </if>
+  </sql>
+
+  <!-- =========================
+       Step 1: ADMIN 예약 목록
+  ========================= -->
+  <select id="selectAdminReservationList" resultType="com.my.movietheater.reservation.dto.AdminReservationListDto">
+    SELECT
+      r.reservation_id   AS reservationId,
+      r.reservation_no   AS reservationNo,
+      r.user_id          AS userId,
+      r.schedule_id      AS scheduleId,
+      r.room_id          AS roomId,
+      r.people_count     AS peopleCount,
+      r.price_total      AS priceTotal,
+      r.status           AS reservationStatus,
+      r.canceled_at      AS canceledAt,
+      r.created_at       AS createdAt,
+      r.updated_at       AS updatedAt,
+
+      u.email            AS userEmail,
+      u.name             AS userName,
+      u.phone            AS userPhone,
+      u.role             AS userRole,
+
+      rm.room_code       AS roomCode,
+      rm.room_name       AS roomName,
+      rm.room_type       AS roomType,
+      rm.capacity_min    AS capacityMin,
+      rm.capacity_max    AS capacityMax,
+
+      s.display_date     AS displayDate,
+      s.start_at         AS startAt,
+      s.end_at           AS endAt,
+      s.status           AS scheduleStatus
+
+    <include refid="adminReservationJoinFrom"/>
+    <include refid="adminReservationWhere"/>
+
+    ORDER BY r.created_at DESC
+    LIMIT #{limit} OFFSET #{offset}
+  </select>
+
+  <select id="countAdminReservationList" resultType="int">
+    SELECT COUNT(*)
+    <include refid="adminReservationJoinFrom"/>
+    <include refid="adminReservationWhere"/>
+  </select>
+
+  <!-- =========================
+       Step 2: ADMIN 강제 취소
+  ========================= -->
+
+  <select id="selectReservationStatusById" resultType="string">
+    SELECT status
+    FROM reservation
+    WHERE reservation_id = #{reservationId}
+  </select>
+
+  <update id="cancelReservationByAdmin">
+    UPDATE reservation
+    SET
+      status = 'CANCELLED',
+      canceled_at = NOW(),
+      updated_at = NOW()
+    WHERE reservation_id = #{reservationId}
+      AND status != 'CANCELLED'
+  </update>
+
+</mapper>

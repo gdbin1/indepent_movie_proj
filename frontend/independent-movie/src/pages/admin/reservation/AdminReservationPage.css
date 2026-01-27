@@ -1,0 +1,94 @@
+.aRP-page {
+  padding: 32px;
+}
+
+.aRP-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+/* ===== Filter ===== */
+.aRP-filter {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.aRP-filter select,
+.aRP-filter input {
+  padding: 8px 10px;
+}
+
+.aRP-filter button {
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+/* ===== Table ===== */
+.aRP-table-wrap {
+  overflow-x: auto;
+}
+
+.aRP-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.aRP-table th,
+.aRP-table td {
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.center {
+  text-align: center;
+}
+
+/* ===== Status ===== */
+.status {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.status.RESERVED {
+  background: #e0f2ff;
+  color: #0077cc;
+}
+
+.status.CANCELLED {
+  background: #fbeaea;
+  color: #c0392b;
+}
+
+/* ===== Button ===== */
+.cancel-btn {
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* ===== Pagination ===== */
+.aRP-pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+.aRP-pagination button {
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.aRP-pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+

@@ -35,6 +35,9 @@ export default function AdminLayout() {
           <NavLink to="/admin/schedule">
             스케줄 관리
           </NavLink>
+          <NavLink to="/admin/reservations">
+            예약 관리
+          </NavLink>
         </nav>
 
         {/* ===== 하단 액션 네비게이션 (고정) ===== */}

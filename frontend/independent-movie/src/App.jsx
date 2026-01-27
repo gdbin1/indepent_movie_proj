@@ -22,6 +22,7 @@ import AdminHome from "./pages/admin/home/AdminHome.jsx";
 import AdminMovie from "./pages/admin/movie/AdminMovie.jsx";
 import AdminRoomPage from "./pages/admin/room/AdminRoomPage.jsx";
 import AdminSchedule from "./pages/admin/schedule/AdminSchedule.jsx";
+import AdminReservationPage from "./pages/admin/reservation/AdminReservationPage.jsx";
 
 
 export default function App() {
@@ -50,6 +51,7 @@ export default function App() {
             <Route path="movie" element={<AdminMovie />} />
             <Route path="room" element={<AdminRoomPage />} />
             <Route path="schedule" element={<AdminSchedule />} />
+            <Route path="/admin/reservations" element={<AdminReservationPage />} />
           </Route>
         </Route>
 
