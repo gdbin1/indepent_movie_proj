@@ -1,0 +1,83 @@
+.uMP-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 32px 20px;
+}
+
+.uMP-title {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.uMP-section-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.uMP-loading {
+  padding: 60px 0;
+  text-align: center;
+}
+
+.uMP-empty {
+  color: #777;
+  padding: 40px 0;
+  text-align: center;
+}
+
+.uMP-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.uMP-card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 14px;
+  background: #fff;
+}
+
+.uMP-cancelled {
+  opacity: 0.55;
+}
+
+.uMP-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.uMP-movie-title {
+  font-weight: 600;
+}
+
+.uMP-status {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.uMP-reserved {
+  background: #e8f0ff;
+  color: #3366ff;
+}
+
+.uMP-cancelled {
+  background: #eee;
+  color: #777;
+}
+
+.uMP-card-body div {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.uMP-price {
+  margin-top: 8px;
+  font-weight: 600;
+}

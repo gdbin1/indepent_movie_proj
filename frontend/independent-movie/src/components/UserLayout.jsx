@@ -1,7 +1,21 @@
 import "./UserLayout.css";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 
 export default function UserLayout() {
+  const navigate = useNavigate();
+  const role = localStorage.getItem("role");
+  const userName = localStorage.getItem("userName");
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/", { replace: true });
+  };
+
+
+  const handleGoAdmin = () => {
+    navigate("/admin");
+  };
+
   return (
     <div className="user-layout">
       {/* ================= HEADER ================= */}
@@ -26,8 +40,42 @@ export default function UserLayout() {
           </nav>
 
           <div className="user-auth">
-            <button className="btn-text">로그인</button>
-            <button className="btn-text">회원가입</button>
+            {!role ? (
+              <>
+                <button
+                  className="btn-text"
+                  onClick={() => navigate("/login")}
+                >
+                  로그인
+                </button>
+                <button className="btn-text">회원가입</button>
+              </>
+            ) : (
+              <>
+                <span className="user-name">{userName}님</span>
+
+                <button className="btn-text" onClick={() => navigate("/mypage")}>
+                  마이 페이지
+                </button>
+
+                {/* 🔥 ADMIN 전용 버튼 */}
+                {role === "ADMIN" && (
+                  <button
+                    className="btn-text"
+                    onClick={handleGoAdmin}
+                  >
+                    관리자 페이지
+                  </button>
+                )}
+
+                <button
+                  className="btn-text"
+                  onClick={handleLogout}
+                >
+                  로그아웃
+                </button>
+              </>
+            )}
           </div>
         </div>
       </header>
