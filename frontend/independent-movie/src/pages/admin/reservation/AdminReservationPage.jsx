@@ -50,6 +50,24 @@ export default function AdminReservationPage() {
         fetchReservations(1);
     };
 
+    /* =========================
+       관리자 강제 예약 취소
+    ========================= */
+    const handleForceCancel = async (reservationId) => {
+        const ok = window.confirm(
+            "해당 예약을 강제로 취소하시겠습니까?\n(이 작업은 되돌릴 수 없습니다)"
+        );
+        if (!ok) return;
+
+        try {
+            await api.post(`/admin/reservations/${reservationId}/cancel`);
+            alert("예약이 취소되었습니다.");
+            fetchReservations(page);
+        } catch {
+            alert("예약 취소 실패");
+        }
+    };
+
     return (
         <div className="aRP-page">
             <h1 className="aRP-title">예약 관리</h1>
@@ -87,6 +105,7 @@ export default function AdminReservationPage() {
                             <th>인원</th>
                             <th>금액</th>
                             <th>상태</th>
+                            <th>관리</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -104,7 +123,24 @@ export default function AdminReservationPage() {
                                     <td>{r.startAt?.slice(11, 16)} ~ {r.endAt?.slice(11, 16)}</td>
                                     <td>{r.peopleCount}</td>
                                     <td>{r.priceTotal.toLocaleString()}원</td>
-                                    <td>{r.reservationStatus}</td>
+                                    <td>
+                                        <span className={`status ${r.reservationStatus}`}>
+                                            {r.reservationStatus}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        {r.reservationStatus === "RESERVED" && (
+                                            <button
+                                                className="cancel-btn"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleForceCancel(r.reservationId);
+                                                }}
+                                            >
+                                                취소하기
+                                            </button>
+                                        )}
+                                    </td>
                                 </tr>
                             ))
                         )}
