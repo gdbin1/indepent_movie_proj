@@ -40,3 +40,53 @@
   flex: 1;
   padding: 32px;
 }
+
+/* =========================
+   Sidebar Layout 보완
+========================= */
+.aL-sidebar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* =========================
+   하단 고정 네비게이션
+========================= */
+.aL-nav-bottom {
+  margin-top: auto;
+  padding: 16px;
+  background: #5a1a1a; /* 버건디 톤 */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* =========================
+   하단 액션 버튼
+========================= */
+.aL-action {
+  width: 100%;
+  height: 40px;
+  border-radius: 6px;
+  border: none;
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.aL-action:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.aL-logout {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.aL-logout:hover {
+  background: rgba(0, 0, 0, 0.35);
+}

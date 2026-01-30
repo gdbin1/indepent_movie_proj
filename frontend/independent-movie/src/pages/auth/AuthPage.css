@@ -1,0 +1,116 @@
+/* =========================
+   AuthPage Layout
+========================= */
+.aP-wrap {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.aP-card {
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 36px 32px 40px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* =========================
+   Title
+========================= */
+.aP-title {
+  font-size: 26px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 28px;
+  color: #1f2937;
+}
+
+/* =========================
+   Form
+========================= */
+.aP-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.aP-input {
+  height: 48px;
+  padding: 0 14px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 15px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.aP-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+}
+
+/* =========================
+   Button
+========================= */
+.aP-button {
+  margin-top: 10px;
+  height: 48px;
+  border-radius: 10px;
+  border: none;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.aP-button:hover {
+  background: #1d4ed8;
+}
+
+.aP-button:active {
+  transform: translateY(1px);
+}
+
+.aP-button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* =========================
+   Error
+========================= */
+.aP-error {
+  font-size: 14px;
+  color: #dc2626;
+  margin-top: 4px;
+}
+
+/* =========================
+   Switch
+========================= */
+.aP-switch {
+  margin-top: 22px;
+  font-size: 14px;
+  text-align: center;
+  color: #6b7280;
+}
+
+.aP-switch button {
+  margin-left: 6px;
+  border: none;
+  background: none;
+  color: #2563eb;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.aP-switch button:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.my.movietheater.mypage.mapper.MyPageMapper">
+
+  <!--
+    MyPage 예약 목록 조회
+    reservation + schedule + movie + room JOIN
+  -->
+  <select id="selectMyReservations" resultType="com.my.movietheater.mypage.dto.MyPageReservationDto">
+    SELECT
+      r.reservation_id       AS reservationId,
+      r.user_id              AS userId,
+
+      s.schedule_id          AS scheduleId,
+      s.display_date         AS displayDate,
+      s.start_at             AS startAt,
+      s.end_at               AS endAt,
+
+      m.movie_id             AS movieId,
+      m.title                AS movieTitle,
+
+      rm.room_id             AS roomId,
+      rm.room_name 			 AS roomName,
+
+      r.people_count         AS peopleCount,
+      r.price_total          AS priceTotal,
+      r.status               AS status,
+      r.created_at           AS createdAt
+    FROM reservation r
+    JOIN schedule s
+      ON r.schedule_id = s.schedule_id
+    JOIN movie m
+      ON s.movie_id = m.movie_id
+    JOIN room rm
+      ON s.room_id = rm.room_id
+    WHERE r.user_id = #{userId}
+    ORDER BY r.created_at DESC
+  </select>
+
+</mapper>

@@ -67,21 +67,24 @@ export default function SeatSelect() {
   const handleReserve = async () => {
     if (!selectedRoom) {
       setShowSelectError(true);
-
-      // 2초 후 자동 해제
-      setTimeout(() => {
-        setShowSelectError(false);
-      }, 2000);
-
+      setTimeout(() => setShowSelectError(false), 2000);
       return;
     }
 
     try {
+      const userId = localStorage.getItem("userId");
+
+      if (!userId) {
+        alert("로그인이 필요합니다.");
+        navigate("/login");
+        return;
+      }
+
       const res = await api.post("/reservations", {
         scheduleId: Number(scheduleId),
         roomId: selectedRoom.roomId,
         peopleCount,
-        userId: 1,
+        userId: Number(userId),
       });
 
       navigate(`/reserve/complete/${res.data.reservationId}`);
@@ -90,6 +93,7 @@ export default function SeatSelect() {
       console.error(e);
     }
   };
+
 
 
   if (!schedule) {
