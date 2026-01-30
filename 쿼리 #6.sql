@@ -194,3 +194,11 @@ SET runtime_min = 120
 WHERE movie_id = 7;
 
 SELECT * FROM movie;
+SHOW TABLES;
+
+DESC box_office_cache;
+DESC movie
+DESC schedule
+DESC room
+DESC reservation
+DESC users
