@@ -190,17 +190,24 @@ SELECT * FROM reservation;
 DELETE FROM reservation
 WHERE status IN("CANCELLED");
 
-DESC reservation;
-DESC room;
-DESC schedule;
 DESC users;
 DESC movie;
+DESC room;
+DESC schedule;
+DESC reservation;
+DESC box_office_cache;
+
+
+
 
 SELECT * FROM users;
 SELECT * FROM movie;
-SELECT * FROM reservation;
-SELECT * FROM schedule;
 SELECT * from room;
+SELECT * FROM schedule;
+SELECT * FROM reservation;
+
+
+
 
 SELECT * FROM movie;
 
@@ -287,6 +294,8 @@ INSERT INTO schedule (movie_id,room_id,start_at,end_at,display_date,status) VALU
 (8, 9, '2026-01-30 19:00:00', '2026-01-30 21:10:00', '2026-01-30', 'OPEN'),
 (1, 5, '2026-01-30 21:30:00', '2026-01-30 23:30:00', '2026-01-30', 'OPEN');
 
+USE independent_movie;
+SELECT * FROM SCHEDULE;
+SELECT * FROM reservation;
 
-
-
+SHOW TABLES;
