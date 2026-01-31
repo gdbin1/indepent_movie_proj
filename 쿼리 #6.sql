@@ -202,3 +202,25 @@ DESC schedule
 DESC room
 DESC reservation
 DESC users
+
+SELECT * from movie
+SELECT * FROM room;
+SELECT * FROM schedule;
+DESC schedule;
+
+SELECT * FROM users;
+
+UPDATE users
+SET
+  email = 'admin@naver.com',
+  password = 'admin',
+  updated_at = CURRENT_TIMESTAMP
+WHERE user_id = 1;
+
+UPDATE users
+SET
+  email = 'admin@naver.com',
+  password = '$2b$10$TVhkHFdy3SD6vDrY2MdgN.zvXm70hyEJxs0AYMkzFMq7LrbJ/xky6',
+  updated_at = CURRENT_TIMESTAMP
+WHERE user_id = 1;
+

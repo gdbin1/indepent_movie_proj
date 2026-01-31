@@ -28,11 +28,11 @@ public class AdminReservationController {
      */
     @GetMapping
     public Map<String, Object> list(
-            @RequestParam String date,
-            @RequestParam(required = false) String status,
-            @RequestParam(required = false) String keyword,
-            @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "10") int size
+            @RequestParam(name = "date") String date,
+            @RequestParam(name = "status", required = false) String status,
+            @RequestParam(name = "keyword", required = false) String keyword,
+            @RequestParam(name = "page", defaultValue = "1") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size
     ) {
         return adminReservationService.getAdminReservationList(
                 date, status, keyword, page, size
@@ -40,7 +40,7 @@ public class AdminReservationController {
     }
 
     @PostMapping("/{reservationId}/cancel")
-    public Map<String, Object> cancel(@PathVariable Long reservationId) {
+    public Map<String, Object> cancel(@PathVariable("reservationId") Long reservationId) {
         return adminReservationService.cancelByAdmin(reservationId);
     }
 }
