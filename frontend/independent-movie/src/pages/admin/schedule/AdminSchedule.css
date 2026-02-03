@@ -29,14 +29,50 @@
   border: 1px solid #ddd;
 }
 
-.aSP-form button {
+/* 버튼 공통 */
+.aSP-btn {
   padding: 10px 20px;
-  border-radius: 6px;
-  border: none;
+  border-radius: 8px;
+  border: 1px solid transparent;
   cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: transform 0.05s ease, opacity 0.15s ease;
+}
+
+.aSP-btn:active {
+  transform: translateY(1px);
+}
+
+.aSP-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* 생성 버튼 */
+.aSP-btn--primary {
   background: #5c6ac4;
   color: #fff;
-  font-size: 14px;
+}
+
+/* 상태변경 버튼(카드용) */
+.aSP-btn--ghost {
+  background: #fff;
+  border-color: #e0e0e0;
+  color: #222;
+  padding: 8px 12px;
+  font-size: 13px;
+}
+
+.aSP-btn--danger {
+  border-color: #f2c4c4;
+  color: #b42318;
+}
+
+.aSP-btn--success {
+  border-color: #bfe6d3;
+  color: #067647;
 }
 
 /* =========================
@@ -71,12 +107,64 @@
   font-size: 16px;
 }
 
-.aSP-card span {
+.aSP-time {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* 카드 레이아웃 보강 */
+.aSP-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.aSP-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.aSP-topRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.aSP-date {
+  font-size: 14px;
+}
+
+.aSP-movieTitle {
+  font-size: 16px;
+}
+
+.aSP-roomName {
   font-size: 13px;
   color: #666;
 }
 
-.aSP-time {
-  font-size: 16px;
-  font-weight: 600;
+/* 상태 뱃지 */
+.aSP-badge {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid transparent;
+}
+
+.aSP-badge--open {
+  background: #ecfdf3;
+  border-color: #abefc6;
+  color: #067647;
+}
+
+.aSP-badge--closed {
+  background: #f2f4f7;
+  border-color: #d0d5dd;
+  color: #344054;
 }

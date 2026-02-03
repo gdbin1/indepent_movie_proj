@@ -48,7 +48,7 @@ public class AdminScheduleController {
      */
     @PatchMapping("/{scheduleId}/status")
     public void updateScheduleStatus(
-            @PathVariable Long scheduleId,
+            @PathVariable("scheduleId") Long scheduleId,
             @RequestBody UpdateScheduleStatusRequest req
     ) {
         adminScheduleService.updateScheduleStatus(scheduleId, req.getStatus());

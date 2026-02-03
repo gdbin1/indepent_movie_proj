@@ -43,8 +43,8 @@ public class ReservationController {
      */
     @PatchMapping("/{reservationId}/cancel")
     public ResponseEntity<Void> cancelReservation(
-            @PathVariable Long reservationId,
-            @RequestParam Long userId
+            @PathVariable("reservationId") Long reservationId,
+            @RequestParam("userId") Long userId
     ) {
         reservationService.cancelReservation(reservationId, userId);
         return ResponseEntity.ok().build();
